@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-echo "=== ITGC Evidence Analyser ==="
+echo "=== Evidence Collection Automator ==="
 echo "Initialising database..."
 python3 -c "from src.database import init_db, ensure_evidence_store; ensure_evidence_store(); init_db()"
 
