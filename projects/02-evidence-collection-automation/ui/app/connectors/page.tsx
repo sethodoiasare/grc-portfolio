@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Radio, Zap, CheckCircle, Clock, AlertTriangle, Play, Loader2, MapPin } from "lucide-react";
+import { Radio, Zap, CheckCircle, Clock, AlertTriangle, Play, Loader2, MapPin, Settings } from "lucide-react";
 import { useAuth } from "../_hooks/useAuth";
+import { ConnectorConfig } from "../_components/ConnectorConfig";
 
 interface Connector {
-  id: number; name: string; connector_type: string; status: string; last_run: string | null; enabled: number;
+  id: number; name: string; connector_type: string; mode: string; status: string; last_run: string | null; enabled: number; auth_config: string;
 }
 interface Market {
   id: number; name: string;
@@ -19,6 +20,7 @@ export default function ConnectorsPage() {
   const [selectedMarket, setSelectedMarket] = useState<number | null>(null);
   const [result, setResult] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [configConnector, setConfigConnector] = useState<Connector | null>(null);
   const { token } = useAuth();
 
   useEffect(() => {
@@ -27,6 +29,17 @@ export default function ConnectorsPage() {
       fetch("/api/v1/markets", { headers: { Authorization: `Bearer ${token}` } }).then(r => r.json()),
     ]).then(([c, m]) => { setConnectors(c); setMarkets(m); }).catch(() => {}).finally(() => setLoading(false));
   }, [token]);
+
+  async function toggleMode(c: Connector) {
+    const newMode = c.mode === "live" ? "simulated" : "live";
+    await fetch(`/api/v1/connectors/${c.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ mode: newMode }),
+    });
+    const res = await fetch("/api/v1/connectors", { headers: { Authorization: `Bearer ${token}` } });
+    setConnectors(await res.json());
+  }
 
   async function triggerRun(id: number) {
     setRunning(id);
@@ -95,9 +108,33 @@ export default function ConnectorsPage() {
                   <Icon size={18} style={{ color: statusColor[c.status] }} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-[var(--fg)]">{c.name}</p>
-                  <p className="text-xs text-[var(--muted)]">{c.connector_type} · Last run: {c.last_run ? new Date(c.last_run).toLocaleDateString() : "Never"}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm font-semibold text-[var(--fg)]">{c.name}</p>
+                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${
+                      c.mode === "live" ? "bg-[var(--pass)]/10 text-[var(--pass)]" : "bg-[var(--partial)]/10 text-[var(--partial)]"
+                    }`}>
+                      {c.mode === "live" ? "LIVE" : "SIM"}
+                    </span>
+                  </div>
+                  <p className="text-xs text-[var(--muted)]">
+                    {c.connector_type} · {c.mode === "live" ? "Real system" : "Simulated data"} · Last run: {c.last_run ? new Date(c.last_run).toLocaleDateString() : "Never"}
+                  </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); setConfigConnector(c); }}
+                  className="flex items-center gap-1 text-[10px] px-2 py-1 rounded border border-[var(--border)] text-[var(--muted)] hover:text-[var(--fg)] hover:border-[var(--accent)] transition-colors"
+                >
+                  <Settings size={11} />
+                  Configure
+                </button>
+                <button
+                  type="button"
+                  onClick={() => toggleMode(c)}
+                  className="text-[10px] px-2 py-1 rounded border border-[var(--border)] text-[var(--muted)] hover:text-[var(--fg)] hover:border-[var(--accent)] transition-colors"
+                >
+                  {c.mode === "live" ? "Switch to Sim" : "Switch to Live"}
+                </button>
                 <button
                   type="button"
                   onClick={() => triggerRun(c.id)}
@@ -112,6 +149,22 @@ export default function ConnectorsPage() {
           })
         )}
       </div>
+
+      {configConnector && (
+        <ConnectorConfig
+          connectorId={configConnector.id}
+          connectorName={configConnector.name}
+          connectorType={configConnector.connector_type}
+          mode={configConnector.mode}
+          authConfig={configConnector.auth_config ? JSON.parse(configConnector.auth_config) : {}}
+          open={!!configConnector}
+          onClose={() => setConfigConnector(null)}
+          onSaved={async () => {
+            const res = await fetch("/api/v1/connectors", { headers: { Authorization: `Bearer ${token}` } });
+            setConnectors(await res.json());
+          }}
+        />
+      )}
     </motion.div>
   );
 }

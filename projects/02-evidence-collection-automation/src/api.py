@@ -22,6 +22,7 @@ from src.auth import (
     get_current_user, require_admin,
 )
 from src.connectors import get_connector, CONNECTORS
+from src.integration import load_config, get_config_schema, run_test_connection
 from src.normalizer import (
     normalize_items, get_evidence_by_collection, get_all_evidence,
     get_evidence_stats, delete_evidence_item,
@@ -153,6 +154,71 @@ class TriggerConnectorRequest(BaseModel):
     config: dict = {}
 
 
+class UpdateConnectorRequest(BaseModel):
+    mode: str | None = None         # "simulated" | "live"
+    auth_config: dict | None = None  # integration-specific credentials
+    enabled: bool | None = None
+
+
+@app.patch("/api/v1/connectors/{connector_id}")
+def route_update_connector(connector_id: int, req: UpdateConnectorRequest, user: dict = Depends(get_current_user)):
+    """Update connector mode, auth config, or enabled status."""
+    conn = get_db()
+    try:
+        c = conn.execute("SELECT * FROM connectors WHERE id = ?", (connector_id,)).fetchone()
+        if c is None:
+            raise HTTPException(status_code=404, detail="Connector not found")
+
+        if req.mode is not None:
+            if req.mode not in ("simulated", "live"):
+                raise HTTPException(status_code=422, detail="mode must be 'simulated' or 'live'")
+            conn.execute("UPDATE connectors SET mode = ? WHERE id = ?", (req.mode, connector_id))
+        if req.auth_config is not None:
+            conn.execute("UPDATE connectors SET auth_config = ? WHERE id = ?",
+                        (json.dumps(req.auth_config), connector_id))
+        if req.enabled is not None:
+            conn.execute("UPDATE connectors SET enabled = ? WHERE id = ?",
+                        (1 if req.enabled else 0, connector_id))
+        conn.commit()
+
+        updated = conn.execute("SELECT * FROM connectors WHERE id = ?", (connector_id,)).fetchone()
+        return dict(updated)
+    finally:
+        conn.close()
+
+
+@app.get("/api/v1/connectors/{connector_id}/schema")
+def route_connector_schema(connector_id: int):
+    """Return the config field schema for a connector type (for the config UI)."""
+    conn = get_db()
+    try:
+        c = conn.execute("SELECT connector_type FROM connectors WHERE id = ?", (connector_id,)).fetchone()
+        if c is None:
+            raise HTTPException(status_code=404, detail="Connector not found")
+        schema = get_config_schema(c["connector_type"])
+        if schema is None:
+            raise HTTPException(status_code=404, detail=f"No schema for connector type: {c['connector_type']}")
+        return schema
+    finally:
+        conn.close()
+
+
+@app.post("/api/v1/connectors/{connector_id}/test")
+def route_test_connection(connector_id: int, user: dict = Depends(get_current_user)):
+    """Test a connector's live connection using stored auth_config."""
+    conn = get_db()
+    try:
+        c = conn.execute("SELECT * FROM connectors WHERE id = ?", (connector_id,)).fetchone()
+        if c is None:
+            raise HTTPException(status_code=404, detail="Connector not found")
+        if c["mode"] != "live":
+            return {"ok": False, "error": "Connector is not in live mode. Switch to live mode first, then test."}
+        result = run_test_connection(c["connector_type"], c["auth_config"])
+        return result
+    finally:
+        conn.close()
+
+
 @app.post("/api/v1/connectors/{connector_id}/run")
 def route_trigger_connector(connector_id: int, req: TriggerConnectorRequest, user: dict = Depends(get_current_user)):
     conn = get_db()
@@ -190,9 +256,13 @@ def route_trigger_connector(connector_id: int, req: TriggerConnectorRequest, use
         collection_id = cur.lastrowid
         conn.commit()
 
-        # Run connector
+        # Run connector (dispatches to simulate or live based on mode)
         try:
-            items = connector.run(req.config or {}, market_name)
+            items = connector.run(
+                req.config or {}, market_name,
+                mode=c["mode"],
+                auth_config=load_config(c["connector_type"], c["auth_config"]),
+            )
         except Exception as e:
             conn.execute(
                 "UPDATE connectors SET status = 'error' WHERE id = ?",

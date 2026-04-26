@@ -14,13 +14,13 @@ DATABASE_PATH = os.environ.get("DATABASE_PATH", str(Path(__file__).resolve().par
 EVIDENCE_STORE = os.environ.get("EVIDENCE_STORE", str(Path(__file__).resolve().parent.parent / "data" / "collected"))
 
 DEFAULT_CONNECTORS = [
-    ("Active Directory", "sim_ad"),
-    ("MDM / Intune", "sim_mdm"),
-    ("Firewall Config", "sim_firewall"),
-    ("Vulnerability Scanner", "sim_vuln"),
-    ("SIEM Log Extractor", "sim_siem"),
-    ("Endpoint DLP", "sim_dlp"),
-    ("Manual Upload", "manual"),
+    ("Active Directory", "sim_ad", "azure_ad"),
+    ("MDM / Intune", "sim_mdm", "intune"),
+    ("Firewall Config", "sim_firewall", "panorama"),
+    ("Vulnerability Scanner", "sim_vuln", "tenable"),
+    ("SIEM Log Extractor", "sim_siem", "sentinel"),
+    ("Endpoint DLP", "sim_dlp", "purview"),
+    ("Manual Upload", "manual", "manual"),
 ]
 
 SCHEMA = """
@@ -43,9 +43,11 @@ CREATE TABLE IF NOT EXISTS connectors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT UNIQUE NOT NULL,
     connector_type TEXT NOT NULL,
+    mode TEXT DEFAULT 'simulated',
     status TEXT DEFAULT 'idle',
     last_run TEXT,
     config_json TEXT DEFAULT '{}',
+    auth_config TEXT DEFAULT '{}',
     enabled INTEGER DEFAULT 1
 );
 
@@ -118,10 +120,10 @@ def init_db(conn: sqlite3.Connection | None = None) -> None:
 
     existing_connectors = conn.execute("SELECT COUNT(*) FROM connectors").fetchone()[0]
     if existing_connectors == 0:
-        for name, ctype in DEFAULT_CONNECTORS:
+        for name, ctype, int_type in DEFAULT_CONNECTORS:
             conn.execute(
-                "INSERT INTO connectors (name, connector_type) VALUES (?, ?)",
-                (name, ctype),
+                "INSERT INTO connectors (name, connector_type, mode, auth_config) VALUES (?, ?, 'simulated', ?)",
+                (name, ctype, json.dumps({"integration_type": int_type})),
             )
 
     if own_conn:

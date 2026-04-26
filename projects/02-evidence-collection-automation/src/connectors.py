@@ -1,15 +1,19 @@
 """
-Connector Engine with Simulated System Integrations.
+Connector Engine with Simulated and Live System Integrations.
 
-Each connector simulates pulling audit evidence from a real system.
-In production, these would be replaced with actual system integrations
-(AD via LDAP, Intune via Graph API, firewall via SSH, etc.).
+Each connector has two modes:
+  - 'simulated': generates realistic sample data marked [SIMULATED]
+  - 'live': connects to real Vodafone systems via their native APIs
+
+Mode is stored in the connectors table and dispatched in ConnectorBase.run().
+Real integration logic lives in src/integration.py.
 
 All generated data is marked [SIMULATED] for audit transparency.
 """
 
 import random
 import uuid
+import os
 from datetime import datetime, timedelta
 from typing import Optional
 from src.models import EvidenceItem
@@ -32,7 +36,12 @@ class ConnectorBase:
     name: str = "base"
     connector_type: str = "base"
 
-    def run(self, config: dict | None = None, market_name: str = "Unknown") -> list[EvidenceItem]:
+    def run(self, config: dict | None = None, market_name: str = "Unknown",
+            mode: str = "simulated", auth_config: object = None) -> list[EvidenceItem]:
+        """Dispatch to simulate() or live collect() based on mode."""
+        if mode == "live" and os.environ.get("INTEGRATION_MODE") == "live":
+            from src.integration import run_live_collection
+            return run_live_collection(self.connector_type, auth_config, market_name)
         return self.simulate(market_name, config or {})
 
     def simulate(self, market_name: str, config: dict) -> list[EvidenceItem]:
