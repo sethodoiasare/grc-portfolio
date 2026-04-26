@@ -67,7 +67,7 @@ def collect(connector: str, market: str):
             )
             collection_id = cur.lastrowid
             conn.commit()
-            saved = normalize_items(items, collection_id)
+            saved = normalize_items(items, collection_id, skip_dedup=True)
             console.print(f"[green]Collected {len(saved)} evidence items[/green]")
     finally:
         conn.close()

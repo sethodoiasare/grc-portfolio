@@ -206,7 +206,7 @@ def route_trigger_connector(connector_id: int, req: TriggerConnectorRequest, use
             raise HTTPException(status_code=500, detail=f"Connector failed: {e}")
 
         # Normalize and save
-        saved = normalize_items(items, collection_id)
+        saved = normalize_items(items, collection_id, skip_dedup=True)
 
         # Update records
         control_ids = list(set(cid for item in items for cid in item.control_mapping))

@@ -12,7 +12,7 @@ from src.database import get_db
 from src.models import EvidenceItem
 
 
-def normalize_items(items: list[EvidenceItem], collection_id: int) -> list[dict]:
+def normalize_items(items: list[EvidenceItem], collection_id: int, skip_dedup: bool = False) -> list[dict]:
     """
     Normalise a list of EvidenceItems and persist them to the database.
     Returns the saved items as dicts.
@@ -26,17 +26,16 @@ def normalize_items(items: list[EvidenceItem], collection_id: int) -> list[dict]
             freshness = item.freshness_date or (datetime.utcnow() + timedelta(days=90)).isoformat() + "Z"
             normalized_at = datetime.utcnow().isoformat() + "Z"
 
-            # Check for duplicates (same source + type within 24h)
-            existing = conn.execute(
-                """SELECT id FROM evidence_items
-                   WHERE source_system = ? AND evidence_type = ?
-                   AND normalized_at > ?""",
-                (item.source_system, item.evidence_type,
-                 (datetime.utcnow() - timedelta(hours=24)).isoformat() + "Z"),
-            ).fetchone()
-
-            if existing:
-                continue  # Skip duplicate
+            if not skip_dedup:
+                existing = conn.execute(
+                    """SELECT ei.id FROM evidence_items ei
+                       WHERE ei.source_system = ? AND ei.evidence_type = ?
+                       AND ei.normalized_at > ?""",
+                    (item.source_system, item.evidence_type,
+                     (datetime.utcnow() - timedelta(hours=1)).isoformat() + "Z"),
+                ).fetchone()
+                if existing:
+                    continue
 
             cur = conn.execute(
                 """INSERT INTO evidence_items

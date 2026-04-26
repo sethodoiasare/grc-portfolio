@@ -82,7 +82,7 @@ try:
             continue
 
         # Normalize and save
-        saved = normalize_items(items, collection_id)
+        saved = normalize_items(items, collection_id, skip_dedup=True)
 
         # Update records
         control_ids = list(set(cid for item in items for cid in item.control_mapping))
