@@ -1,94 +1,109 @@
 # Azure Deployment Guide — ITGC Evidence Analyser
 
-## What You Need on Your Vodafone Laptop
+## Overview
 
-1. **Azure CLI** — `winget install Microsoft.AzureCLI` or download from portal.azure.com
-2. **Docker Desktop** — installed and running
-3. **This project** — cloned from `github.com/sethodoiasare/grc-portfolio`
+Deploy using **Azure Cloud Shell** inside portal.azure.com. No local installs needed — Cloud Shell has Azure CLI, git, and everything pre-installed. The Docker image is built in Azure Container Registry directly from the GitHub repo.
 
-## Before You Start
+---
 
-Set your secrets as environment variables:
+## Step 1 — Open Cloud Shell
+
+1. Go to **portal.azure.com** and sign in
+2. Click the **Cloud Shell** icon in the top bar (looks like `>_` )
+3. Select **Bash** when prompted
+4. Wait for the shell to initialize (first time takes ~30 seconds)
+
+---
+
+## Step 2 — Run the Deployment
+
+Paste these lines into Cloud Shell one at a time:
 
 ```bash
+# Clone the repo
+git clone https://github.com/sethodoiasare/grc-portfolio.git
+cd grc-portfolio/projects/01-itgc-evidence-analyser
+
+# Set your secrets
 export ANTHROPIC_API_KEY="sk-ant-api03-your-key-here"
 export JWT_SECRET_KEY="$(openssl rand -hex 32)"
+echo "Save this JWT secret: $JWT_SECRET_KEY"
+
+# Run deployment
+chmod +x deploy-azure-cloud.sh
+./deploy-azure-cloud.sh
 ```
 
-Save the JWT secret — you'll need it for future deployments.
+When it finishes, it prints your app URL. Copy it.
 
-## Deployment (Single Command)
+---
+
+## Step 3 — Create the Admin Account
+
+Still in Cloud Shell:
 
 ```bash
-cd projects/01-itgc-evidence-analyser
-chmod +x deploy-azure.sh
-./deploy-azure.sh
+# Find your container app name
+CONTAINER="itgc-analyser"
+RG="rg-itgc-analyser-prod"
+
+# Exec into the container
+az containerapp exec --resource-group $RG --name $CONTAINER --command "/bin/bash"
 ```
 
-## What the Script Does
-
-| Step | Action |
-|------|--------|
-| 1 | Logs into Azure (opens browser for device code) |
-| 2 | Creates resource group `rg-itgc-analyser-prod` in UK South |
-| 3 | Creates Azure Container Registry `itgcanalyseracr` |
-| 4 | Builds Docker image and pushes to ACR |
-| 5 | Creates storage account + file share for persistent SQLite DB |
-| 6 | Creates Container Apps environment |
-| 7 | Deploys container app (0.5 CPU, 1GB RAM, auto-scales to 3 replicas) |
-| 8 | Mounts persistent volume at `/app/data` |
-
-## After Deployment
-
-### Seed the admin account
-
-SSH into the container:
+Inside the container, type:
 ```bash
-az containerapp exec --resource-group rg-itgc-analyser-prod \
-  --name itgc-analyser --command "/bin/bash"
-```
-
-Then inside the container:
-```bash
-python3 seed_admin.py admin@vodafone.com YourAdminPassword123!
+python3 seed_admin.py admin@vodafone.com YourAdminPassword
 exit
 ```
 
-### Open the app
+---
 
-The script prints the URL at the end. It will be something like:
-`https://itgc-analyser.agreeableground-uksouth.azurecontainerapps.io`
+## Step 4 — Open the App
 
-### Have auditors register
+Go to the URL printed in Step 2. You'll see the login page. Sign in with the admin credentials.
 
-Send them the URL. They go to `/register`, create accounts with email + password, and start assessing.
+Then have your audit colleagues go to `/register` to create their own accounts.
 
-## Monthly Cost Estimate
+---
 
-| Resource | Tier | ~Cost/mo |
+## What Gets Created
+
+| Resource | Name | Purpose |
 |----------|------|---------|
-| Container App | 0.5 CPU, 1GB, 1 replica | ~$15 |
-| Container Registry | Basic | ~$5 |
-| Storage Account | 1GB file share | ~$1 |
-| **Total** | | **~$21/mo** |
+| Resource Group | `rg-itgc-analyser-prod` | Everything lives here |
+| Container Registry | `itgcanalyseracr` | Stores Docker images |
+| Container App | `itgc-analyser` | Runs the app, port 80 |
+| Storage Account | `itgcstorage` | Persistent SQLite DB |
+| File Share | `itgc-data` | Mounted at `/app/data` |
 
-Plus Claude API usage — ~$0.02 per assessment (with prompt caching).
+---
 
-## Updating the App
+## Updating the App (When You Add Features)
 
-When you want to add features:
+I push new code to GitHub. Then you open Cloud Shell and run:
 
 ```bash
-# 1. Pull latest code
-git pull
+az acr build --registry itgcanalyseracr \
+  --image itgc-analyser:v1.2.0 \
+  https://github.com/sethodoiasare/grc-portfolio.git#main:projects/01-itgc-evidence-analyser
 
-# 2. Build and push new image
-az acr build --registry itgcanalyseracr --image itgc-analyser:v1.2.0 .
-
-# 3. Update the container app
 az containerapp update --resource-group rg-itgc-analyser-prod \
   --name itgc-analyser \
   --image itgcanalyseracr.azurecr.io/itgc-analyser:v1.2.0
 ```
 
-Data persists across updates — the SQLite database lives on the Azure file share.
+Zero downtime. Data persists on the file share.
+
+---
+
+## Monthly Cost ~$21
+
+| Resource | Cost/mo |
+|----------|---------|
+| Container App (0.5 CPU, 1GB) | ~$15 |
+| Container Registry (Basic) | ~$5 |
+| Storage (1GB file share) | ~$1 |
+| **Total** | **~$21** |
+
+Plus Claude API — ~$0.02 per assessment.
