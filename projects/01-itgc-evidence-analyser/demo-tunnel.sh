@@ -1,9 +1,9 @@
 #!/bin/bash
 # =============================================================================
 # ITGC Evidence Analyser — Demo Tunnel Launcher
-# Run this any time you want to demo the app to someone.
-# It starts the backend, frontend, and a public tunnel.
-# Press Ctrl+C when done — everything stops.
+# Starts backend + frontend + nginx reverse proxy, then creates a public
+# Cloudflare Tunnel. Single URL, no CORS issues, multipart uploads work.
+# Run this, share the URL, Ctrl+C when done.
 # =============================================================================
 set -e
 
@@ -17,23 +17,65 @@ echo ""
 # Kill anything already on these ports
 lsof -ti:8001 | xargs kill -9 2>/dev/null || true
 lsof -ti:3000 | xargs kill -9 2>/dev/null || true
+lsof -ti:8080 | xargs kill -9 2>/dev/null || true
+pkill -f cloudflared 2>/dev/null || true
 sleep 1
 
 # Start backend
-echo "[1/3] Starting backend on port 8001..."
+echo "[1/4] Starting backend on port 8001..."
 cd "$PROJECT_DIR"
 python3 -m uvicorn src.api:app --port 8001 &
 BACKEND_PID=$!
 
-# Build frontend for production (no HMR noise through tunnel)
-echo "[2/4] Building frontend for production..."
+# Build and start frontend
+echo "[2/4] Building frontend..."
 cd "$PROJECT_DIR/ui"
 npm run build 2>&1 | tail -1
-
-# Start frontend in production mode
-echo "[3/4] Starting frontend on port 3000 (production)..."
+echo "Starting frontend on port 3000..."
 npm start -- --port 3000 &
 FRONTEND_PID=$!
+
+# Start nginx on port 8080 (avoid conflict with system nginx)
+echo "[3/4] Starting local nginx on port 8080..."
+cd "$PROJECT_DIR"
+cat > /tmp/itgc-demo-nginx.conf << 'NGINX'
+worker_processes 1;
+error_log /tmp/itgc-nginx-error.log;
+pid /tmp/itgc-nginx.pid;
+
+events { worker_connections 64; }
+
+http {
+    access_log off;
+    client_max_body_size 50M;
+
+    server {
+        listen 8080;
+
+        location / {
+            proxy_pass http://127.0.0.1:3000;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_read_timeout 300s;
+        }
+
+        location /api/ {
+            proxy_pass http://127.0.0.1:8001;
+            proxy_http_version 1.1;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_read_timeout 300s;
+        }
+
+        location /docs { proxy_pass http://127.0.0.1:8001; }
+        location /openapi.json { proxy_pass http://127.0.0.1:8001; }
+    }
+}
+NGINX
+nginx -c /tmp/itgc-demo-nginx.conf &
+NGINX_PID=$!
 
 # Wait for servers to be ready
 echo "Waiting for servers..."
@@ -54,16 +96,17 @@ echo " Press Ctrl+C to stop"
 echo "============================================"
 echo ""
 
-# Trap Ctrl+C to clean up
 cleanup() {
   echo ""
   echo "Shutting down..."
   kill $BACKEND_PID 2>/dev/null || true
   kill $FRONTEND_PID 2>/dev/null || true
+  kill $NGINX_PID 2>/dev/null || true
+  pkill -f cloudflared 2>/dev/null || true
+  rm -f /tmp/itgc-demo-nginx.conf /tmp/itgc-nginx-error.log /tmp/itgc-nginx.pid
   echo "Demo stopped."
   exit 0
 }
 trap cleanup INT TERM
 
-# Run tunnel — this blocks until Ctrl+C
-cloudflared tunnel --url http://localhost:3000 2>&1
+cloudflared tunnel --url http://localhost:8080 2>&1

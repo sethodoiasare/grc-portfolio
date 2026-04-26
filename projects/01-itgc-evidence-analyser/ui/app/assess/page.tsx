@@ -169,9 +169,8 @@ function AssessContent() {
           ...(marketId ? { market_id: String(marketId) } : {}),
           ...(samplesStr ? { samples: samplesStr } : {}),
         });
-        // Call backend directly for multipart uploads — Next.js proxy breaks them
-        const baseUrl = typeof window !== "undefined" ? "http://localhost:8001" : "";
-        res = await fetch(`${baseUrl}/api/v1/assess/upload/multi?${params}`, {
+        // Nginx reverse proxy handles multipart correctly
+        res = await fetch(`/api/v1/assess/upload/multi?${params}`, {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` },
           body: formData,
