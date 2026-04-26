@@ -25,10 +25,14 @@ cd "$PROJECT_DIR"
 python3 -m uvicorn src.api:app --port 8001 &
 BACKEND_PID=$!
 
-# Start frontend
-echo "[2/3] Starting frontend on port 3000..."
+# Build frontend for production (no HMR noise through tunnel)
+echo "[2/4] Building frontend for production..."
 cd "$PROJECT_DIR/ui"
-npm run dev -- --port 3000 &
+npm run build 2>&1 | tail -1
+
+# Start frontend in production mode
+echo "[3/4] Starting frontend on port 3000 (production)..."
+npm start -- --port 3000 &
 FRONTEND_PID=$!
 
 # Wait for servers to be ready
@@ -41,7 +45,7 @@ for i in {1..30}; do
 done
 
 # Start tunnel
-echo "[3/3] Starting public tunnel..."
+echo "[4/4] Starting public tunnel..."
 echo ""
 echo "============================================"
 echo " DEMO URL: (will appear below)"
