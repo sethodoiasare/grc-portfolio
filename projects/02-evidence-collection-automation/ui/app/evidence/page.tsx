@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Layers, Search, Trash2, X, ChevronDown, ChevronRight, MapPin } from "lucide-react";
+import { EvidenceRenderer } from "../_components/EvidenceRenderer";
 import { useAuth } from "../_hooks/useAuth";
 
 interface EvidenceItem {
@@ -82,7 +83,7 @@ export default function EvidencePage() {
                 </button>
                 {expanded === i.id && (
                   <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} className="overflow-hidden border-t border-[var(--border)]">
-                    <pre className="p-4 text-xs text-[var(--muted)] overflow-x-auto whitespace-pre-wrap font-mono">{JSON.stringify(i.data, null, 2)}</pre>
+                    <div className="p-4"><EvidenceRenderer evidenceType={i.evidence_type} data={i.data} /></div>
                   </motion.div>
                 )}
               </motion.div>

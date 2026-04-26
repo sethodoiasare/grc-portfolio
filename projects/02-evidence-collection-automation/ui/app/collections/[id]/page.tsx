@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Database, CheckCircle, Loader2, Calendar, MapPin, Layers, ChevronDown, ChevronRight } from "lucide-react";
 import { useAuth } from "../../_hooks/useAuth";
+import { EvidenceRenderer } from "../../_components/EvidenceRenderer";
 
 interface EvidenceItem {
   id: number; evidence_type: string; source_system: string;
@@ -78,7 +79,7 @@ export default function CollectionDetailPage() {
             </button>
             {expanded === item.id && (
               <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} className="overflow-hidden border-t border-[var(--border)]">
-                <pre className="p-4 text-xs text-[var(--muted)] overflow-x-auto whitespace-pre-wrap font-mono">{JSON.stringify(item.data, null, 2)}</pre>
+                <div className="p-4"><EvidenceRenderer evidenceType={item.evidence_type} data={item.data} /></div>
               </motion.div>
             )}
           </div>
