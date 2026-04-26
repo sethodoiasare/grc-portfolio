@@ -1,0 +1,10 @@
+audit_scope: "Vodafone UK IT General Controls -- Q1 2026"
+
+assessments:
+  - control_id: IAM_001
+    evidence_file: data/samples/sample_evidence_iam001.txt
+    statement_type: D
+
+  - control_id: VUL_001
+    evidence_file: data/samples/sample_evidence_vul001.txt
+    statement_type: D

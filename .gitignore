@@ -1,0 +1,52 @@
+# Secrets & credentials — NEVER commit these
+.env
+credentials.json
+token.json
+*.pem
+*.key
+*.p12
+*.pfx
+service-account*.json
+
+# Temporary / regeneratable files
+.tmp/
+*.tmp
+*.log
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Reports output (regeneratable)
+reports/
+*.pdf
+*.xlsx
+
+# Database & evidence storage (local only)
+data/itgc.db
+data/evidence/
+
+# Presentations (generated)
+*.pptx
+
+# Claude internal
+.claude/

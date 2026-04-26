@@ -1,0 +1,122 @@
+Evidence Reference: VUL-EV-001
+Control: VUL_001 -- Management of Technical Vulnerabilities and Patching
+Vodafone Standard: CYBER_007
+Audit Period: Q1 2026 (January -- March 2026)
+Prepared by: Vulnerability Management Team, Vodafone UK Cyber Security
+Review Status: Draft -- Submitted to Internal Audit 08 April 2026
+
+--------------------------------------------------------------------------------
+1. PROCEDURE AND POLICY DOCUMENTATION
+--------------------------------------------------------------------------------
+
+The Vulnerability Management Procedure (VMP-UK-2025 v2.4, approved 22 October
+2025 by CISO delegate A. Nwosu, Head of Cyber Defence) defines the programme for
+identifying, assessing, prioritising, and remediating technical vulnerabilities
+across all Vodafone UK in-scope infrastructure and applications. The document is
+version-controlled in the corporate document management system (IS-PROC-0078) and
+was last reviewed on 22 October 2025 with sign-off by Information Asset Owner
+D. Ramirez (Director of Infrastructure). Remediation SLAs are codified in
+Section 5 of the procedure:
+
+  - Critical (CVSS >= 9.0):  14 calendar days
+  - High (CVSS 7.0 -- 8.9):  30 calendar days
+  - Medium (CVSS 4.0 -- 6.9): 90 calendar days
+  - Low (CVSS < 4.0):         Next scheduled maintenance window
+
+--------------------------------------------------------------------------------
+2. VULNERABILITY SCAN SUMMARY -- Q1 2026
+--------------------------------------------------------------------------------
+
+Authenticated scans are executed using Tenable.io (infrastructure) and
+DAST/SAST tooling integrated into the CI/CD pipeline (applications). Scan
+results feed into the Vodafone UK Vulnerability Tracking Register (VTR),
+maintained in ServiceNow.
+
+Infrastructure Scan Coverage (monthly cadence):
+  - Scan dates Q1 2026: 08-Jan, 06-Feb, 06-Mar
+  - Total assets in scope: 3,847 (servers, network devices, endpoints)
+  - Assets scanned each cycle: 3,847 (100% coverage confirmed by Tenable console
+    report exported 08 Apr 2026)
+  - Total unique vulnerabilities identified Q1 2026: 1,284
+    - Critical: 23
+    - High:    187
+    - Medium:  641
+    - Low:     433
+
+Application Scan Coverage (quarterly cadence):
+  - Q1 2026 scan completed: 14 -- 17 March 2026 (29 applications in scope)
+  - Applications scanned: 29 / 29 (100%)
+  - Vulnerabilities identified from application scans: 94 (High: 12, Medium: 82)
+
+--------------------------------------------------------------------------------
+3. SLA COMPLIANCE FIGURES -- Q1 2026
+--------------------------------------------------------------------------------
+
+Critical vulnerabilities identified in Q1: 23
+  Remediated within 14-day SLA: 20
+  SLA breaches (formal exceptions raised): 3
+  SLA compliance rate (Critical): 87.0%
+
+High vulnerabilities identified in Q1: 199 (includes 12 from app scans)
+  Remediated within 30-day SLA: 181
+  SLA breaches (formal exceptions raised): 18
+  SLA compliance rate (High): 90.9%
+
+Overall Critical + High SLA compliance rate: 90.1%
+
+Note: All 21 SLA exceptions (3 Critical, 18 High) have been formally risk-
+accepted by Information Asset Owner D. Ramirez and are recorded in the VTR
+exception register. Compensating controls (enhanced monitoring, WAF rules, or
+network isolation) are documented for each exception. Monthly exception reviews
+were conducted on 30 January, 27 February, and 31 March 2026.
+
+--------------------------------------------------------------------------------
+4. TOP 5 CRITICAL FINDINGS -- Q1 2026 (OPEN AT PERIOD END OR RECENTLY CLOSED)
+--------------------------------------------------------------------------------
+
+Finding ID    | CVE              | Asset                    | CVSS | Days Open | SLA (days) | Status
+------------- | ---------------- | ------------------------ | ---- | --------- | ---------- | --------
+VUL-2026-0018 | CVE-2025-44217   | uk-prod-app01.vf.com     | 9.8  | 11        | 14         | CLOSED
+VUL-2026-0034 | CVE-2025-51033   | uk-db-oracle-03.vf.com   | 9.6  | 9         | 14         | CLOSED
+VUL-2026-0051 | CVE-2026-00182   | uk-fw-edge-02.vf.com     | 9.4  | 22        | 14         | EXCEPTION
+VUL-2026-0072 | CVE-2026-01044   | uk-prod-k8s-node05.vf.com| 9.1  | 14        | 14         | CLOSED
+VUL-2026-0091 | CVE-2026-01387   | uk-mgmt-jump01.vf.com    | 9.3  | 18        | 14         | EXCEPTION
+
+CLOSED items: patch deployed via emergency change (ECH) process, tested in
+pre-prod, and approved by CAB or Emergency CAB prior to production deployment.
+EXCEPTION items: network-layer compensating controls applied; formal exception
+documented and risk-accepted by IAO pending vendor patch availability.
+
+--------------------------------------------------------------------------------
+5. MEAN TIME TO REMEDIATE (MTTR) -- Q1 2026
+--------------------------------------------------------------------------------
+
+  Critical vulnerabilities: MTTR = 10.4 calendar days (target: < 14 days)
+  High vulnerabilities:     MTTR = 21.7 calendar days (target: < 30 days)
+  Medium vulnerabilities:   MTTR = 63.2 calendar days (target: < 90 days)
+
+MTTR figures are computed from the VTR for all vulnerabilities fully remediated
+during Q1 2026 (closed status). Vulnerabilities still open at period end are
+excluded from MTTR calculations and tracked via the exception register.
+
+Monthly vulnerability management metrics were reported to the IT Security Manager
+(A. Nwosu) and the Head of Technology Risk on 31 January, 27 February, and
+31 March 2026. Evidence of reporting includes meeting minutes and the signed
+monthly Vulnerability Management Dashboard (VMD-2026-Q1).
+
+--------------------------------------------------------------------------------
+6. CONTROL OWNER ATTESTATION
+--------------------------------------------------------------------------------
+
+I, K. Osei, Vulnerability Management Lead (Vodafone UK Cyber Defence), confirm
+that the vulnerability management programme operated in accordance with
+VMP-UK-2025 v2.4 throughout Q1 2026. Authenticated infrastructure scans were
+conducted monthly with 100% asset coverage. All Critical and High vulnerabilities
+were either remediated within SLA or subject to a formal documented exception with
+IAO sign-off and compensating controls in place. Monthly metrics were reported to
+senior stakeholders as required. The three Critical and eighteen High exception
+items remain under active tracking; target remediation dates are Q2 2026
+following planned vendor patch releases scheduled for April and May 2026.
+
+Signed: K. Osei, Vulnerability Management Lead
+Date: 08 April 2026

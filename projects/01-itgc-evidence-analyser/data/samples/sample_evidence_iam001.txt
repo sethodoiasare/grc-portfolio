@@ -1,0 +1,106 @@
+Evidence Reference: IAM-EV-001
+Control: IAM_001 -- User Registration and De-registration
+Vodafone Standard: CYBER/STD/017
+Audit Period: Q1 2026 (January -- March 2026)
+Prepared by: Access Management Team, Vodafone UK IT
+Review Status: Draft -- Submitted to Internal Audit 08 April 2026
+
+--------------------------------------------------------------------------------
+1. PROCEDURE DOCUMENTATION
+--------------------------------------------------------------------------------
+
+The User Access Management Procedure (UAMP-UK-2025 v3.2, approved 14 November
+2025 by CISO delegate J. Hartley, Director of Identity and Access Management)
+defines the end-to-end lifecycle for user account creation, modification, and
+de-registration across all Vodafone UK in-scope production systems. The procedure
+is published on the Vodafone UK InfoSec SharePoint intranet (document ID
+IS-PROC-0042) and version-controlled within the corporate document management
+system. The most recent annual review was completed on 14 November 2025, with
+documented sign-off from the Information Asset Owner (IAO), P. Okafor (VP
+Technology Platforms). The previous version (v3.1, approved November 2024) was
+superseded following the migration to the ServiceNow ITSM platform in Q3 2025.
+
+--------------------------------------------------------------------------------
+2. ITSM TICKET WORKFLOW -- USER REGISTRATION
+--------------------------------------------------------------------------------
+
+All new user account requests are submitted via ServiceNow (instance:
+vodafone-uk.service-now.com) using the "New User Access Request" (NUAR) catalogue
+item. The workflow enforces the following mandatory fields before submission:
+requester employee ID, new user full name, job title, department, cost centre,
+line manager approval (captured as a ServiceNow approval task), list of systems
+and access levels required, and a free-text business justification field.
+
+The ServiceNow workflow routes each NUAR ticket to the IAO or their delegate for
+a secondary approval gate before the Access Management team provisions the
+account. Provisioning confirmation is recorded as a resolution note on the ticket
+with a timestamp. No account creation is permitted outside of this workflow;
+direct provisioning requests via email or verbal instruction are rejected per
+UAMP-UK-2025 Section 4.3.
+
+--------------------------------------------------------------------------------
+3. HR SYSTEM INTEGRATION -- LEAVER PROCESS
+--------------------------------------------------------------------------------
+
+Vodafone UK's HR system (Workday) is integrated with ServiceNow via a nightly
+automated data feed. When a leaver event is recorded in Workday (resignation,
+termination, or end of contract), a ServiceNow "Leaver De-registration" (LDR)
+ticket is automatically created by 06:00 the following business day. The ticket
+triggers a workflow that:
+
+  (a) Suspends all Active Directory accounts associated with the leaver within
+      4 hours of ticket creation.
+  (b) Revokes VPN and remote access credentials within the same 4-hour window.
+  (c) Schedules full account deletion after a 30-day retention period as required
+      by the HR data retention policy (HDRET-UK-2024).
+
+During Q1 2026, 47 leaver events were processed. All 47 met the one business day
+SLA for account deactivation. The Access Management team conducted a manual
+reconciliation of Workday leaver records against ServiceNow LDR tickets on
+31 January, 28 February, and 31 March 2026; no discrepancies were identified.
+
+--------------------------------------------------------------------------------
+4. SAMPLE REGISTRATION TICKETS -- Q1 2026 (REPRESENTATIVE SELECTION)
+--------------------------------------------------------------------------------
+
+Ticket #      | User              | System       | Requested By      | Approved By      | Date
+------------- | ----------------- | ------------ | ----------------- | ---------------- | ----------
+NUAR-2026-041 | A. Mensah         | SAP ERP      | T. Williams (Mgr) | P. Okafor (IAO)  | 07-Jan-26
+NUAR-2026-089 | C. Adeyemi        | Salesforce   | R. Patel (Mgr)    | K. Singh (IAO D) | 19-Jan-26
+NUAR-2026-153 | D. Kowalski       | AWS Prod     | S. Gupta (Mgr)    | P. Okafor (IAO)  | 03-Feb-26
+NUAR-2026-217 | F. Nkemdirim      | JIRA/Conf.   | L. Chen (Mgr)     | K. Singh (IAO D) | 17-Feb-26
+NUAR-2026-304 | H. Petrescu       | ServiceNow   | M. Obi (Mgr)      | P. Okafor (IAO)  | 09-Mar-26
+
+All five sampled tickets include: requester identity, business justification,
+system and access level requested, and IAO or delegate approval prior to account
+creation. Provisioning timestamps confirm accounts were created after approval
+was recorded in each case -- no pre-approval provisioning exceptions noted.
+
+--------------------------------------------------------------------------------
+5. LEAVER ACCOUNT DEACTIVATION -- SLA COMPLIANCE EXAMPLE
+--------------------------------------------------------------------------------
+
+LDR Ticket: LDR-2026-029
+Leaver: B. Fitzgerald (Network Engineer, departed 14 February 2026)
+Workday termination recorded: 14 February 2026, 17:30 GMT
+ServiceNow LDR ticket auto-created: 15 February 2026, 06:00 GMT
+Active Directory account suspended: 15 February 2026, 07:43 GMT
+VPN credential revoked: 15 February 2026, 08:11 GMT
+Time from leaving date to deactivation: 14 hours 43 minutes (within 1 business
+day SLA). Access Management confirmation note recorded at 08:15 GMT by team
+lead R. Svensson.
+
+--------------------------------------------------------------------------------
+6. QUARTERLY REVIEW -- ACCESS MANAGEMENT TEAM ATTESTATION
+--------------------------------------------------------------------------------
+
+The Access Management team (lead: R. Svensson, Access Management Lead) confirms
+that the User Registration and De-registration procedure operated as designed
+throughout Q1 2026. All registration requests were processed through ServiceNow;
+no off-channel provisioning requests were fulfilled. The Workday-to-ServiceNow
+integration performed without interruption during the period. The next scheduled
+annual procedure review is due November 2026 and has been pre-scheduled in the
+InfoSec governance calendar.
+
+Signed: R. Svensson, Access Management Lead
+Date: 08 April 2026
