@@ -9,7 +9,7 @@ test:
 demo:
 	python3 -m src.cli compute --demo --output data/metrics-report.json
 
-demo-charts:
+demo-charts: install
 	python3 -m src.cli compute --demo --charts --chart-dir data/charts --output data/metrics-report.json
 
 clean:

@@ -50,10 +50,14 @@ def main():
         print(f"\nReport saved to {path}")
 
         if args.charts:
-            from .charts import export_charts
-            chart_paths = export_charts(report, args.chart_dir)
-            for cp in chart_paths:
-                print(f"Chart saved to {cp}")
+            try:
+                from .charts import export_charts
+                chart_paths = export_charts(report, args.chart_dir)
+                for cp in chart_paths:
+                    print(f"Chart saved to {cp}")
+            except ImportError:
+                print("Warning: matplotlib not installed. JSON report saved; charts skipped.")
+                print("Install with: pip install matplotlib")
 
     else:
         parser.print_help()
