@@ -1,0 +1,26 @@
+[
+  {
+    "_policy_id": "IAM-001",
+    "PolicyName": "S3ReadOnly",
+    "Action": ["s3:GetObject", "s3:ListBucket"],
+    "Resource": ["arn:aws:s3:::my-bucket/*"]
+  },
+  {
+    "_policy_id": "IAM-001",
+    "PolicyName": "BadPolicy",
+    "Action": ["*"],
+    "Resource": ["*"]
+  },
+  {
+    "_policy_id": "NET-001",
+    "GroupId": "sg-open-ssh",
+    "SecurityGroupRules": [
+      {"Protocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": "0.0.0.0/0"}
+    ]
+  },
+  {
+    "_policy_id": "ENC-001",
+    "BucketName": "customer-data",
+    "DefaultEncryption": {"Enabled": false}
+  }
+]
