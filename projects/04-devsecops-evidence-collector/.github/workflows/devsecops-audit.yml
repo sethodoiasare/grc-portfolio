@@ -1,0 +1,26 @@
+name: DevSecOps Audit Evidence
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      zap_target:
+        description: "Staging URL for DAST scan"
+        required: false
+
+jobs:
+  devsecops-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run DevSecOps Evidence Collector
+        uses: ./projects/04-devsecops-evidence-collector
+        with:
+          audit_project: "GRC Platform"
+          audit_period: "FY25-Q4"
+          zap_target: ${{ inputs.zap_target }}
+          signing_secret: ${{ secrets.DEVSECOPS_SIGNING_SECRET }}

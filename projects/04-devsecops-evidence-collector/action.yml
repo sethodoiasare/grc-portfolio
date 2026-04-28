@@ -1,0 +1,130 @@
+name: "DevSecOps Audit Evidence Collector"
+description: "Run SAST, SCA, secrets scanning, and DAST then package results as Vodafone DevSecOps D1-D8 audit evidence"
+author: "GRC Engineering"
+
+inputs:
+  semgrep_config:
+    description: "Path to Semgrep config file"
+    required: false
+    default: "auto"
+  zap_target:
+    description: "Target URL for OWASP ZAP DAST scan"
+    required: false
+  audit_project:
+    description: "Project name for evidence package"
+    required: false
+  audit_period:
+    description: "Audit reporting period (e.g. FY25-Q3)"
+    required: false
+  signing_secret:
+    description: "HMAC signing secret for evidence package integrity"
+    required: false
+
+outputs:
+  evidence_package:
+    description: "Path to the generated evidence package JSON"
+    value: ${{ steps.package.outputs.path }}
+  blocking_count:
+    description: "Number of critical/high blocking findings"
+    value: ${{ steps.package.outputs.blocking_count }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install evidence collector
+      shell: bash
+      run: pip install -r ${{ github.action_path }}/requirements.txt
+
+    - name: Run Semgrep SAST
+      id: sast
+      shell: bash
+      run: |
+        pip install -q semgrep
+        semgrep --config=${{ inputs.semgrep_config }} --json -o semgrep-output.json . || true
+        echo "output=semgrep-output.json" >> $GITHUB_OUTPUT
+
+    - name: Run pip-audit SCA
+      id: sca
+      shell: bash
+      run: |
+        pip install -q pip-audit
+        pip-audit --format=json --output=pip-audit-output.json . || true
+        echo "output=pip-audit-output.json" >> $GITHUB_OUTPUT
+
+    - name: Run Gitleaks Secrets Scan
+      id: secrets
+      shell: bash
+      run: |
+        curl -sSfL https://github.com/gitleaks/gitleaks/releases/download/v8.18.0/gitleaks_8.18.0_linux_amd64.tar.gz | tar xz
+        ./gitleaks detect --source=. --report-format=json --report-path=gitleaks-output.json --no-git --verbose || true
+        echo "output=gitleaks-output.json" >> $GITHUB_OUTPUT
+
+    - name: Run OWASP ZAP DAST
+      id: dast
+      if: inputs.zap_target != ''
+      shell: bash
+      run: |
+        docker pull -q owasp/zap2docker-stable:latest
+        docker run --rm -v $(pwd):/zap/wrk owasp/zap2docker-stable:latest zap-baseline.py \
+          -t ${{ inputs.zap_target }} -J zap-output.json || true
+        echo "output=zap-output.json" >> $GITHUB_OUTPUT
+
+    - name: Package audit evidence
+      id: package
+      shell: bash
+      env:
+        SIGNING_SECRET: ${{ inputs.signing_secret }}
+      run: |
+        python -m src.cli \
+          --semgrep semgrep-output.json \
+          --pip-audit pip-audit-output.json \
+          --gitleaks gitleaks-output.json \
+          ${ZAP_TARGET:+--zap zap-output.json} \
+          --project "${{ inputs.audit_project || github.repository }}" \
+          --branch "${{ github.ref_name }}" \
+          --commit "${{ github.sha }}" \
+          --pipeline-run "${{ github.run_id }}" \
+          --audit-period "${{ inputs.audit_period }}" \
+          --sign \
+          --output evidence-package.json
+
+        echo "path=evidence-package.json" >> $GITHUB_OUTPUT
+
+        BLOCKING=$(python -c "
+import json
+pkg = json.load(open('evidence-package.json'))
+print(len(pkg.get('blocking_findings', [])))
+")
+        echo "blocking_count=$BLOCKING" >> $GITHUB_OUTPUT
+
+    - name: Upload evidence package artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: devsecops-audit-evidence
+        path: evidence-package.json
+        retention-days: 90
+
+    - name: Summary
+      shell: bash
+      run: |
+        echo "## DevSecOps Audit Evidence" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        python -c "
+import json
+pkg = json.load(open('evidence-package.json'))
+cs = pkg['coverage_summary']
+print('| Control | Verdict |')
+print('|---------|---------|')
+for k, v in cs.items():
+    print(f'| {k} | {v} |')
+print()
+print(f\"**Blocking findings:** {len(pkg['blocking_findings'])}\")
+print(f\"**Gaps:** {len(pkg['gaps'])}\")
+if pkg.get('signature'):
+    print(f\"**Signed:** {pkg['signature'][:16]}...\")
+" >> $GITHUB_STEP_SUMMARY
