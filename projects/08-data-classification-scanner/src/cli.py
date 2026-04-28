@@ -18,7 +18,8 @@ def main():
     sub = parser.add_subparsers(dest="command")
 
     scan_p = sub.add_parser("scan", help="Scan files/directories for sensitive data")
-    scan_p.add_argument("path", type=Path, help="File or directory to scan")
+    scan_p.add_argument("path", type=Path, nargs="?", default=None,
+                        help="File or directory to scan (omit with --demo)")
     scan_p.add_argument("--output", "-o", type=Path, default=Path("classification-report.json"))
     scan_p.add_argument("--extensions", "-e", nargs="+", help="File extensions to scan (e.g. .py .json .txt)")
     scan_p.add_argument("--demo", action="store_true", help="Run against built-in demo data")
@@ -32,8 +33,11 @@ def main():
         if args.demo:
             _generate_demo_files()
             scan_path = Path("data/demo_scan")
-        else:
+        elif args.path:
             scan_path = args.path
+        else:
+            print("Error: path required (or use --demo)")
+            sys.exit(1)
 
         if not scan_path.exists():
             print(f"Error: path '{scan_path}' does not exist")

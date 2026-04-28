@@ -60,11 +60,6 @@ def scan_directory(root: Path, extensions: Optional[list[str]] = None) -> list[C
 
 def _skip_false_positive(rule_id: str, matched_text: str, line: str) -> bool:
     """Filter out obvious false positives for generic patterns."""
-    # CVV pattern is too generic — require context keywords
-    if rule_id == "PCI-002":
-        keywords = ["cvv", "cvc", "cvv2", "cvc2", "security code", "card verification"]
-        if not any(k in line.lower() for k in keywords):
-            return True
     # NHS number — require context
     if rule_id == "PHI-001":
         nhs_keywords = ["nhs", "patient", "hospital", "gp", "prescription", "health"]

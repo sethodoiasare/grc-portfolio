@@ -86,8 +86,8 @@ CLASSIFICATION_RULES = [
         "title": "CVV/CVC Number",
         "category": DataCategory.PCI,
         "severity": Severity.CRITICAL,
-        "pattern": r"\b[0-9]{3,4}\b",
-        "description": "Card verification values (requires context validation)",
+        "pattern": r"(?i)(?:cvv|cvc|cid)\b.*?(\d{3,4})",
+        "description": "CVV/CVC/CID numbers near card verification labels",
     },
     # ── PHI ───────────────────────────────────────────────────────
     {
