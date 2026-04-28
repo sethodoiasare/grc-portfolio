@@ -12,7 +12,6 @@ def export_charts(report: MetricReport, output_dir: Path) -> list[Path]:
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
-        import matplotlib.ticker as mticker
     except ImportError:
         raise ImportError("matplotlib required for charts. Install with: pip install matplotlib")
 
@@ -31,10 +30,11 @@ def export_charts(report: MetricReport, output_dir: Path) -> list[Path]:
 
 
 def _chart_sla_gauge(report, output_dir, plt):
+    import matplotlib.ticker as mticker
+
     fig, ax = plt.subplots(figsize=(6, 4))
     compliance = report.vuln_sla.sla_compliance_pct
     colors = ["#E60000", "#FFC107", "#28A745"]
-    bounds = [0, 70, 85, 100]
     color = colors[2] if compliance >= 85 else (colors[1] if compliance >= 70 else colors[0])
 
     ax.barh(["Vuln SLA"], [compliance], color=color, height=0.4)
