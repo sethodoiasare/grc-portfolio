@@ -1,7 +1,7 @@
 .PHONY: install test test-cov lint clean demo
 
 install:
-	pip install -r requirements.txt
+	python3 -m pip install -r requirements.txt
 
 test:
 	pytest tests/ -v --tb=short
@@ -13,7 +13,7 @@ lint:
 	ruff check src/ tests/ || true
 
 demo:
-	python -m src.cli \
+	python3 -m src.cli \
 		--all-from-dir data/sample_outputs \
 		--project "GRC Demo Platform" \
 		--branch "main" \

@@ -1,10 +1,10 @@
 .PHONY: install seed test api lint clean
 
 install:
-	pip install -r requirements.txt
+	python3 -m pip install -r requirements.txt
 
 seed:
-	python -m src.seed_data
+	python3 -m src.seed_data
 
 test:
 	pytest tests/ -v --tb=short
