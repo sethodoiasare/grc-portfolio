@@ -727,7 +727,7 @@ a:hover { text-decoration: underline; }
         <a href="#summary">Summary</a>
     </nav>
     <div class="sidebar-footer">
-        Generated {{ data.generated_at[:19] if data.generated_at else 'N/A' }}
+        Generated 2026-04-29T10:29:47
     </div>
 </aside>
 
@@ -737,28 +737,28 @@ a:hover { text-decoration: underline; }
     <!-- Top Bar -->
     <div class="topbar">
         <h2>Portfolio Dashboard</h2>
-        <div class="rag-badge {{ data.overall_rag.value|lower }}">
-            <span class="rag-dot {{ data.overall_rag.value|lower }}"></span>
-            Overall: {{ data.overall_rag.value }}
+        <div class="rag-badge red">
+            <span class="rag-dot red"></span>
+            Overall: RED
         </div>
     </div>
 
     <!-- Stats Row -->
     <div class="stats-row">
         <div class="stat-card">
-            <div class="stat-value">{{ data.summary.total_projects }}</div>
+            <div class="stat-value">12</div>
             <div class="stat-label">Total Projects</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">{{ data.summary.total_tests }}</div>
+            <div class="stat-value">739</div>
             <div class="stat-label">Total Tests</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">{{ data.summary.controls_covered }} / {{ data.summary.controls_total }}</div>
+            <div class="stat-value">23 / 34</div>
             <div class="stat-label">Controls Covered</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">{{ data.summary.upcoming_deadlines }}</div>
+            <div class="stat-value">5</div>
             <div class="stat-label">Upcoming Deadlines</div>
         </div>
     </div>
@@ -767,39 +767,292 @@ a:hover { text-decoration: underline; }
     <section class="section" id="projects">
         <div class="section-header">
             <h3>Project Status</h3>
-            <span class="section-count">{{ data.projects|length }} projects</span>
+            <span class="section-count">12 projects</span>
         </div>
         <div class="project-grid">
-            {% for p in data.projects %}
-            <div class="project-card rag-{{ p.rag.value|lower }}">
+            
+            <div class="project-card rag-green">
                 <div class="card-header">
-                    <h4>{{ p.name }}</h4>
-                    <span class="card-id">{{ p.project_id }}</span>
+                    <h4>ITGC Evidence Analyser</h4>
+                    <span class="card-id">P1</span>
                 </div>
                 <div class="card-meta">
-                    <span class="type-badge {{ p.type.value|lower }}">{{ p.type.value }}</span>
-                    <span class="status-badge {{ p.status.value|lower|replace('_', '-') }}">{{ p.status.value|replace('_', ' ') }}</span>
+                    <span class="type-badge web">WEB</span>
+                    <span class="status-badge complete">COMPLETE</span>
                 </div>
-                <div class="card-description">{{ p.description }}</div>
+                <div class="card-description">AI-powered CLI and REST API for ITGC audit evidence assessment using Claude AI.</div>
                 <div class="card-stats">
-                    <span><span class="stat-num">{{ p.test_count }}</span> tests</span>
-                    {% if p.port %}
-                    <span>Port <span class="stat-num">{{ p.port }}</span></span>
-                    {% endif %}
+                    <span><span class="stat-num">80</span> tests</span>
+                    
+                    <span>Port <span class="stat-num">8001</span></span>
+                    
                     <span>
                         Evidence:
-                        {% if p.evidence_freshness_days <= 7 %}
-                        <span class="staleness fresh">{{ p.evidence_freshness_days }}d</span>
-                        {% elif p.evidence_freshness_days <= 30 %}
-                        <span class="staleness stale">{{ p.evidence_freshness_days }}d</span>
-                        {% else %}
-                        <span class="staleness expired">{{ p.evidence_freshness_days }}d</span>
-                        {% endif %}
+                        
+                        <span class="staleness fresh">7d</span>
+                        
                     </span>
-                    <span class="rag-dot {{ p.rag.value|lower }}" title="{{ p.rag.value }}"></span>
+                    <span class="rag-dot green" title="GREEN"></span>
                 </div>
             </div>
-            {% endfor %}
+            
+            <div class="project-card rag-green">
+                <div class="card-header">
+                    <h4>Evidence Collection Automation</h4>
+                    <span class="card-id">P2</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge web">WEB</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">Automated evidence collection from 7 enterprise systems + IAM lifecycle simulator.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">106</span> tests</span>
+                    
+                    <span>Port <span class="stat-num">8002</span></span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness stale">14d</span>
+                        
+                    </span>
+                    <span class="rag-dot green" title="GREEN"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-green">
+                <div class="card-header">
+                    <h4>Vuln SLA Tracker</h4>
+                    <span class="card-id">P3</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge web">WEB</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">Scanner ingestion, SLA breach engine, and Plotly dashboards for vulnerability tracking.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">70</span> tests</span>
+                    
+                    <span>Port <span class="stat-num">8003</span></span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness fresh">3d</span>
+                        
+                    </span>
+                    <span class="rag-dot green" title="GREEN"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-green">
+                <div class="card-header">
+                    <h4>DevSecOps Evidence Collector</h4>
+                    <span class="card-id">P4</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">GitHub Action composite action with Python packager and HMAC signing for DevSecOps evidence.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">79</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness stale">21d</span>
+                        
+                    </span>
+                    <span class="rag-dot green" title="GREEN"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-amber">
+                <div class="card-header">
+                    <h4>Cloud Posture Snapshot</h4>
+                    <span class="card-id">P5</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">52 CIS checks across AWS, Azure, and GCP with PDF reporting.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">73</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness stale">30d</span>
+                        
+                    </span>
+                    <span class="rag-dot amber" title="AMBER"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-amber">
+                <div class="card-header">
+                    <h4>Policy-as-Code Starter Kit</h4>
+                    <span class="card-id">P6</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge needs-review">NEEDS REVIEW</span>
+                </div>
+                <div class="card-description">12 OPA Rego policies + Python evaluator for IAM least privilege, encryption, and logging.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">55</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness expired">45d</span>
+                        
+                    </span>
+                    <span class="rag-dot amber" title="AMBER"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-red">
+                <div class="card-header">
+                    <h4>Security Metrics Pack</h4>
+                    <span class="card-id">P7</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">MTTD/MTTR calculations, alert quality metrics, vuln SLA tracking with matplotlib charts.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">28</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness expired">60d</span>
+                        
+                    </span>
+                    <span class="rag-dot red" title="RED"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-green">
+                <div class="card-header">
+                    <h4>Data Classification Scanner</h4>
+                    <span class="card-id">P8</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">14 regex patterns for PII, PCI, PHI, and secrets detection with classification reports.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">36</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness stale">10d</span>
+                        
+                    </span>
+                    <span class="rag-dot green" title="GREEN"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-green">
+                <div class="card-header">
+                    <h4>Control Coverage Mapper</h4>
+                    <span class="card-id">P9</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">Parses policy documents and maps controls across 4 frameworks with heatmap generation.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">59</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness fresh">5d</span>
+                        
+                    </span>
+                    <span class="rag-dot green" title="GREEN"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-green">
+                <div class="card-header">
+                    <h4>Risk Register + Scoring Engine</h4>
+                    <span class="card-id">P10</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">CVSS v3.1 + SSVC v2 scoring engine with 5x5 risk matrix, CRUD, and acceptance workflows.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">63</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness stale">12d</span>
+                        
+                    </span>
+                    <span class="rag-dot green" title="GREEN"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-amber">
+                <div class="card-header">
+                    <h4>Vendor Security Questionnaire</h4>
+                    <span class="card-id">P11</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge needs-review">NEEDS REVIEW</span>
+                </div>
+                <div class="card-description">Weighted scoring across 7 categories for third-party risk assessment questionnaires.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">31</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness expired">50d</span>
+                        
+                    </span>
+                    <span class="rag-dot amber" title="AMBER"></span>
+                </div>
+            </div>
+            
+            <div class="project-card rag-green">
+                <div class="card-header">
+                    <h4>Incident Response Runbook Gen</h4>
+                    <span class="card-id">P12</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge cli">CLI</span>
+                    <span class="status-badge complete">COMPLETE</span>
+                </div>
+                <div class="card-description">6 incident type templates with 230+ actions and AI-assisted customisation.</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">59</span> tests</span>
+                    
+                    <span>
+                        Evidence:
+                        
+                        <span class="staleness stale">8d</span>
+                        
+                    </span>
+                    <span class="rag-dot green" title="GREEN"></span>
+                </div>
+            </div>
+            
         </div>
     </section>
 
@@ -807,16 +1060,34 @@ a:hover { text-decoration: underline; }
     <section class="section" id="coverage">
         <div class="section-header">
             <h3>Control Coverage Matrix</h3>
-            <span class="section-count">{{ data.controls|length }} controls</span>
+            <span class="section-count">34 controls</span>
         </div>
 
         <!-- Category Filter Chips -->
-        {% set categories = data.controls|map(attribute='category')|unique|list %}
+        
         <div class="filter-row">
             <span class="filter-chip active" data-filter="all">All</span>
-            {% for cat in categories %}
-            <span class="filter-chip" data-filter="{{ cat }}">{{ cat }}</span>
-            {% endfor %}
+            
+            <span class="filter-chip" data-filter="Access Control">Access Control</span>
+            
+            <span class="filter-chip" data-filter="Endpoint Security">Endpoint Security</span>
+            
+            <span class="filter-chip" data-filter="Network Security">Network Security</span>
+            
+            <span class="filter-chip" data-filter="Data Protection">Data Protection</span>
+            
+            <span class="filter-chip" data-filter="Vulnerability Management">Vulnerability Management</span>
+            
+            <span class="filter-chip" data-filter="SIEM &amp; Monitoring">SIEM &amp; Monitoring</span>
+            
+            <span class="filter-chip" data-filter="Incident Response">Incident Response</span>
+            
+            <span class="filter-chip" data-filter="Supplier Security">Supplier Security</span>
+            
+            <span class="filter-chip" data-filter="Risk Management">Risk Management</span>
+            
+            <span class="filter-chip" data-filter="Compliance">Compliance</span>
+            
         </div>
 
         <!-- Matrix Table -->
@@ -825,39 +1096,2970 @@ a:hover { text-decoration: underline; }
                 <thead>
                     <tr>
                         <th>Control</th>
-                        {% for p in data.projects %}
-                        <th>{{ p.project_id }}</th>
-                        {% endfor %}
+                        
+                        <th>P1</th>
+                        
+                        <th>P2</th>
+                        
+                        <th>P3</th>
+                        
+                        <th>P4</th>
+                        
+                        <th>P5</th>
+                        
+                        <th>P6</th>
+                        
+                        <th>P7</th>
+                        
+                        <th>P8</th>
+                        
+                        <th>P9</th>
+                        
+                        <th>P10</th>
+                        
+                        <th>P11</th>
+                        
+                        <th>P12</th>
+                        
                         <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for c in data.controls %}
-                    <tr data-category="{{ c.category }}">
+                    
+                    <tr data-category="Access Control">
                         <td>
-                            <span class="control-name">{{ c.control_name }}</span>
-                            <span class="control-category">{{ c.category }}</span>
+                            <span class="control-name">User Registration &amp; De-registration</span>
+                            <span class="control-category">Access Control</span>
                         </td>
-                        {% for p in data.projects %}
+                        
                         <td>
-                            {% if p.project_id in c.covered_by %}
-                                {% if c.status.value == 'COVERED' %}
+                            
+                                
                                 <span class="cell-covered" title="Covered">&check;</span>
-                                {% elif c.status.value == 'PARTIAL' %}
-                                <span class="cell-partial" title="Partial">~</span>
-                                {% else %}
-                                <span class="cell-gap" title="Gap">&times;</span>
-                                {% endif %}
-                            {% else %}
-                            <span class="cell-none">&middot;</span>
-                            {% endif %}
+                                
+                            
                         </td>
-                        {% endfor %}
+                        
                         <td>
-                            <span class="coverage-status {{ c.status.value|lower }}">{{ c.status.value }}</span>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
                         </td>
                     </tr>
-                    {% endfor %}
+                    
+                    <tr data-category="Access Control">
+                        <td>
+                            <span class="control-name">User Access Provisioning</span>
+                            <span class="control-category">Access Control</span>
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Access Control">
+                        <td>
+                            <span class="control-name">Privileged Access Management</span>
+                            <span class="control-category">Access Control</span>
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Access Control">
+                        <td>
+                            <span class="control-name">Access Rights Review</span>
+                            <span class="control-category">Access Control</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Access Control">
+                        <td>
+                            <span class="control-name">Access Removal for Leavers</span>
+                            <span class="control-category">Access Control</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Access Control">
+                        <td>
+                            <span class="control-name">Multi-Factor Authentication</span>
+                            <span class="control-category">Access Control</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Access Control">
+                        <td>
+                            <span class="control-name">Secure Log-On Procedures</span>
+                            <span class="control-category">Access Control</span>
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Endpoint Security">
+                        <td>
+                            <span class="control-name">Mobile Device Management</span>
+                            <span class="control-category">Endpoint Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Endpoint Security">
+                        <td>
+                            <span class="control-name">Anti-Malware Controls</span>
+                            <span class="control-category">Endpoint Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Endpoint Security">
+                        <td>
+                            <span class="control-name">Endpoint DLP</span>
+                            <span class="control-category">Endpoint Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Endpoint Security">
+                        <td>
+                            <span class="control-name">Endpoint Detection &amp; Response (EDR)</span>
+                            <span class="control-category">Endpoint Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Network Security">
+                        <td>
+                            <span class="control-name">Remote Access</span>
+                            <span class="control-category">Network Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Network Security">
+                        <td>
+                            <span class="control-name">Firewall Rule Management</span>
+                            <span class="control-category">Network Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Network Security">
+                        <td>
+                            <span class="control-name">IDS/IPS</span>
+                            <span class="control-category">Network Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Network Security">
+                        <td>
+                            <span class="control-name">Web Application Firewall (WAF)</span>
+                            <span class="control-category">Network Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Network Security">
+                        <td>
+                            <span class="control-name">Network Segregation</span>
+                            <span class="control-category">Network Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Data Protection">
+                        <td>
+                            <span class="control-name">Email DLP</span>
+                            <span class="control-category">Data Protection</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Data Protection">
+                        <td>
+                            <span class="control-name">Information Classification</span>
+                            <span class="control-category">Data Protection</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Data Protection">
+                        <td>
+                            <span class="control-name">Removable Media Controls</span>
+                            <span class="control-category">Data Protection</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Data Protection">
+                        <td>
+                            <span class="control-name">Privacy &amp; PII Protection</span>
+                            <span class="control-category">Data Protection</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Vulnerability Management">
+                        <td>
+                            <span class="control-name">Patch Management</span>
+                            <span class="control-category">Vulnerability Management</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Vulnerability Management">
+                        <td>
+                            <span class="control-name">Technical Vulnerability Management</span>
+                            <span class="control-category">Vulnerability Management</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Vulnerability Management">
+                        <td>
+                            <span class="control-name">Penetration Testing</span>
+                            <span class="control-category">Vulnerability Management</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Vulnerability Management">
+                        <td>
+                            <span class="control-name">Hardening Standards Compliance</span>
+                            <span class="control-category">Vulnerability Management</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="SIEM &amp; Monitoring">
+                        <td>
+                            <span class="control-name">Security Event Logging</span>
+                            <span class="control-category">SIEM &amp; Monitoring</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="SIEM &amp; Monitoring">
+                        <td>
+                            <span class="control-name">Incident Event Management</span>
+                            <span class="control-category">SIEM &amp; Monitoring</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="SIEM &amp; Monitoring">
+                        <td>
+                            <span class="control-name">Alert Monitoring &amp; Response</span>
+                            <span class="control-category">SIEM &amp; Monitoring</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Incident Response">
+                        <td>
+                            <span class="control-name">Incident Response Plan</span>
+                            <span class="control-category">Incident Response</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Incident Response">
+                        <td>
+                            <span class="control-name">Incident Classification</span>
+                            <span class="control-category">Incident Response</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Supplier Security">
+                        <td>
+                            <span class="control-name">Supplier Security Agreements</span>
+                            <span class="control-category">Supplier Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-partial" title="Partial">~</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status partial">PARTIAL</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Supplier Security">
+                        <td>
+                            <span class="control-name">Supplier Service Monitoring</span>
+                            <span class="control-category">Supplier Security</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-gap" title="Gap">&times;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status gap">GAP</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Risk Management">
+                        <td>
+                            <span class="control-name">Risk Assessment Framework</span>
+                            <span class="control-category">Risk Management</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Compliance">
+                        <td>
+                            <span class="control-name">Policy-to-Control Mapping</span>
+                            <span class="control-category">Compliance</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                                
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="Compliance">
+                        <td>
+                            <span class="control-name">Audit Readiness Tracking</span>
+                            <span class="control-category">Compliance</span>
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            
+                            <span class="cell-none">&middot;</span>
+                            
+                        </td>
+                        
+                        <td>
+                            <span class="coverage-status covered">COVERED</span>
+                        </td>
+                    </tr>
+                    
                 </tbody>
             </table>
         </div>
@@ -867,22 +4069,70 @@ a:hover { text-decoration: underline; }
     <section class="section" id="deadlines">
         <div class="section-header">
             <h3>Upcoming Audit Deadlines</h3>
-            <span class="section-count">{{ data.deadlines|length }} upcoming</span>
+            <span class="section-count">5 upcoming</span>
         </div>
         <div class="deadline-list">
-            {% for d in data.deadlines %}
-            <div class="deadline-item priority-{{ d.priority|lower }}">
+            
+            <div class="deadline-item priority-high">
                 <div class="deadline-date">
-                    <div class="days">{{ d.days_remaining }}</div>
+                    <div class="days">14</div>
                     <div class="label">DAYS</div>
                 </div>
                 <div class="deadline-info">
-                    <div class="desc">{{ d.description }}</div>
-                    <div class="meta">Due {{ d.date }} &middot; Control {{ d.related_control }}</div>
+                    <div class="desc">Annual IAM Control Review — Privileged Access Management (C03)</div>
+                    <div class="meta">Due 2026-05-13 &middot; Control C03</div>
                 </div>
-                <span class="deadline-priority {{ d.priority|lower }}">{{ d.priority }}</span>
+                <span class="deadline-priority high">HIGH</span>
             </div>
-            {% endfor %}
+            
+            <div class="deadline-item priority-high">
+                <div class="deadline-date">
+                    <div class="days">21</div>
+                    <div class="label">DAYS</div>
+                </div>
+                <div class="deadline-info">
+                    <div class="desc">Q2 Vulnerability Management Audit — Patch Compliance Reporting (C21/C22)</div>
+                    <div class="meta">Due 2026-05-20 &middot; Control C21</div>
+                </div>
+                <span class="deadline-priority high">HIGH</span>
+            </div>
+            
+            <div class="deadline-item priority-medium">
+                <div class="deadline-date">
+                    <div class="days">35</div>
+                    <div class="label">DAYS</div>
+                </div>
+                <div class="deadline-info">
+                    <div class="desc">Supplier Risk Re-assessment — Vendor Questionnaires due (C30/C31)</div>
+                    <div class="meta">Due 2026-06-03 &middot; Control C30</div>
+                </div>
+                <span class="deadline-priority medium">MEDIUM</span>
+            </div>
+            
+            <div class="deadline-item priority-medium">
+                <div class="deadline-date">
+                    <div class="days">60</div>
+                    <div class="label">DAYS</div>
+                </div>
+                <div class="deadline-info">
+                    <div class="desc">Cloud Security Posture Review — CIS Benchmarks Refresh (C12/C13/C14)</div>
+                    <div class="meta">Due 2026-06-28 &middot; Control C12</div>
+                </div>
+                <span class="deadline-priority medium">MEDIUM</span>
+            </div>
+            
+            <div class="deadline-item priority-low">
+                <div class="deadline-date">
+                    <div class="days">85</div>
+                    <div class="label">DAYS</div>
+                </div>
+                <div class="deadline-info">
+                    <div class="desc">Data Privacy Compliance Check — PII Protection Review (C20)</div>
+                    <div class="meta">Due 2026-07-23 &middot; Control C20</div>
+                </div>
+                <span class="deadline-priority low">LOW</span>
+            </div>
+            
         </div>
     </section>
 
@@ -895,34 +4145,30 @@ a:hover { text-decoration: underline; }
             <div>
                 <h3>Portfolio Health</h3>
                 <p>
-                    {{ data.summary.total_projects }} projects across {{ data.controls|length }} Vodafone security controls.
-                    <strong>{{ data.summary.controls_covered }}</strong> fully covered,
-                    <strong>{{ data.summary.controls_partial }}</strong> partially covered,
-                    <strong>{{ data.summary.controls_gap }}</strong> gaps.
-                    {{ data.summary.upcoming_deadlines }} audit deadlines upcoming.
-                    {% if data.overall_rag.value == 'GREEN' %}
-                    All projects and evidence are within acceptable thresholds.
-                    {% elif data.overall_rag.value == 'AMBER' %}
-                    Some projects require attention — evidence freshness or partial control coverage needs remediation before the next audit cycle.
-                    {% else %}
+                    12 projects across 34 Vodafone security controls.
+                    <strong>23</strong> fully covered,
+                    <strong>10</strong> partially covered,
+                    <strong>1</strong> gaps.
+                    5 audit deadlines upcoming.
+                    
                     Critical gaps exist. Immediate remediation is required on stale evidence and uncovered controls.
-                    {% endif %}
+                    
                 </p>
                 <div class="summary-metadata">
-                    Dashboard generated {{ data.generated_at[:19] if data.generated_at else 'N/A' }}
+                    Dashboard generated 2026-04-29T10:29:47
                 </div>
             </div>
             <div class="summary-mini-grid">
                 <div>
-                    <div class="mini-val green">{{ data.summary.projects_green }}</div>
+                    <div class="mini-val green">8</div>
                     <div class="mini-label">GREEN Projects</div>
                 </div>
                 <div>
-                    <div class="mini-val amber">{{ data.summary.projects_amber }}</div>
+                    <div class="mini-val amber">3</div>
                     <div class="mini-label">AMBER Projects</div>
                 </div>
                 <div>
-                    <div class="mini-val red">{{ data.summary.projects_red }}</div>
+                    <div class="mini-val red">1</div>
                     <div class="mini-label">RED Projects</div>
                 </div>
             </div>
