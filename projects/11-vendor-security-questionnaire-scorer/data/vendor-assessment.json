@@ -1,0 +1,295 @@
+{
+  "vendor_name": "CloudMatrix Ltd",
+  "assessment_date": "2026-04-29",
+  "questions": [
+    {
+      "id": "Q-001",
+      "category": "AccessControl",
+      "text": "Does the vendor enforce MFA for all privileged access?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": "SSO with enforced MFA via Okta"
+    },
+    {
+      "id": "Q-002",
+      "category": "AccessControl",
+      "text": "Are access reviews conducted at least quarterly?",
+      "weight": "MEDIUM",
+      "answer": "YES",
+      "notes": ""
+    },
+    {
+      "id": "Q-003",
+      "category": "AccessControl",
+      "text": "Is role-based access control (RBAC) implemented across all systems?",
+      "weight": "MEDIUM",
+      "answer": "YES",
+      "notes": ""
+    },
+    {
+      "id": "Q-004",
+      "category": "DataProtection",
+      "text": "Is customer data classified and labelled according to sensitivity?",
+      "weight": "HIGH",
+      "answer": "NO",
+      "notes": "No formal classification scheme in place"
+    },
+    {
+      "id": "Q-005",
+      "category": "DataProtection",
+      "text": "Are data retention and deletion policies documented and enforced?",
+      "weight": "HIGH",
+      "answer": "NO",
+      "notes": "Policy exists but not enforced"
+    },
+    {
+      "id": "Q-006",
+      "category": "DataProtection",
+      "text": "Does the vendor maintain a data inventory or data flow map?",
+      "weight": "MEDIUM",
+      "answer": "PARTIAL",
+      "notes": "Inventory exists for production only; dev/staging undocumented"
+    },
+    {
+      "id": "Q-007",
+      "category": "DataProtection",
+      "text": "Is personal data processing compliant with applicable privacy regulations (GDPR/CCPA)?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": "DPO appointed, GDPR compliance program active"
+    },
+    {
+      "id": "Q-008",
+      "category": "Encryption",
+      "text": "Is all customer data encrypted at rest using AES-256 or equivalent?",
+      "weight": "HIGH",
+      "answer": "NO",
+      "notes": "Some legacy volumes use default encryption only"
+    },
+    {
+      "id": "Q-009",
+      "category": "Encryption",
+      "text": "Is TLS 1.2+ enforced for all data in transit?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": ""
+    },
+    {
+      "id": "Q-010",
+      "category": "Encryption",
+      "text": "Are encryption keys managed via a dedicated KMS/HSM?",
+      "weight": "HIGH",
+      "answer": "NO",
+      "notes": "Keys stored alongside data in some non-production environments"
+    },
+    {
+      "id": "Q-011",
+      "category": "Encryption",
+      "text": "Is there a documented key rotation policy with a maximum 90-day rotation window?",
+      "weight": "MEDIUM",
+      "answer": "PARTIAL",
+      "notes": "Policy exists but rotation not automated"
+    },
+    {
+      "id": "Q-012",
+      "category": "IncidentResponse",
+      "text": "Does the vendor have a documented incident response plan?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": ""
+    },
+    {
+      "id": "Q-013",
+      "category": "IncidentResponse",
+      "text": "Are incident response tabletop exercises conducted annually?",
+      "weight": "MEDIUM",
+      "answer": "PARTIAL",
+      "notes": "Last tabletop was 18 months ago"
+    },
+    {
+      "id": "Q-014",
+      "category": "IncidentResponse",
+      "text": "Does the vendor maintain 24/7 security monitoring with defined SLAs?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": "SOC 2 Type II certified"
+    },
+    {
+      "id": "Q-015",
+      "category": "IncidentResponse",
+      "text": "Is there a documented breach notification process (<72 hours)?",
+      "weight": "MEDIUM",
+      "answer": "YES",
+      "notes": ""
+    },
+    {
+      "id": "Q-016",
+      "category": "BCP",
+      "text": "Is there a documented and tested business continuity plan?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": "Annual BCP test completed"
+    },
+    {
+      "id": "Q-017",
+      "category": "BCP",
+      "text": "Are RTO and RPO defined for all critical systems?",
+      "weight": "MEDIUM",
+      "answer": "PARTIAL",
+      "notes": "Defined for production only"
+    },
+    {
+      "id": "Q-018",
+      "category": "BCP",
+      "text": "Does the vendor maintain geographically diverse disaster recovery sites?",
+      "weight": "MEDIUM",
+      "answer": "NO",
+      "notes": "Single-region DR currently"
+    },
+    {
+      "id": "Q-019",
+      "category": "BCP",
+      "text": "Are backups tested for restore capability at least quarterly?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": ""
+    },
+    {
+      "id": "Q-020",
+      "category": "SupplierMgmt",
+      "text": "Does the vendor assess security posture of their own sub-processors?",
+      "weight": "HIGH",
+      "answer": "PARTIAL",
+      "notes": "Assessment performed at onboarding only, no ongoing monitoring"
+    },
+    {
+      "id": "Q-021",
+      "category": "SupplierMgmt",
+      "text": "Are sub-processor dependencies disclosed and updated in contract schedules?",
+      "weight": "MEDIUM",
+      "answer": "YES",
+      "notes": ""
+    },
+    {
+      "id": "Q-022",
+      "category": "SupplierMgmt",
+      "text": "Does the vendor maintain a supplier risk register?",
+      "weight": "MEDIUM",
+      "answer": "NO",
+      "notes": ""
+    },
+    {
+      "id": "Q-023",
+      "category": "Compliance",
+      "text": "Does the vendor hold a current SOC 2 Type II report?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": "Latest report dated Q1 2026"
+    },
+    {
+      "id": "Q-024",
+      "category": "Compliance",
+      "text": "Is the vendor ISO 27001 certified?",
+      "weight": "HIGH",
+      "answer": "YES",
+      "notes": "Certificate valid through 2027"
+    },
+    {
+      "id": "Q-025",
+      "category": "Compliance",
+      "text": "Are regular penetration tests performed by an independent third party?",
+      "weight": "MEDIUM",
+      "answer": "YES",
+      "notes": "Annual pen test; last: Nov 2025"
+    },
+    {
+      "id": "Q-026",
+      "category": "Compliance",
+      "text": "Does the vendor have a documented vulnerability disclosure program?",
+      "weight": "LOW",
+      "answer": "PARTIAL",
+      "notes": "Security.txt exists but no formal bug bounty"
+    },
+    {
+      "id": "Q-027",
+      "category": "Compliance",
+      "text": "Is the vendor PCI DSS certified? (if handling cardholder data)",
+      "weight": "LOW",
+      "answer": "NA",
+      "notes": "Vendor does not process payment card data"
+    }
+  ],
+  "category_scores": [
+    {
+      "category": "AccessControl",
+      "total_weighted": 7.0,
+      "max_possible": 7.0,
+      "pct": 100.0,
+      "risk_level": "LOW"
+    },
+    {
+      "category": "DataProtection",
+      "total_weighted": 4.0,
+      "max_possible": 11.0,
+      "pct": 36.4,
+      "risk_level": "CRITICAL"
+    },
+    {
+      "category": "Encryption",
+      "total_weighted": 4.0,
+      "max_possible": 11.0,
+      "pct": 36.4,
+      "risk_level": "CRITICAL"
+    },
+    {
+      "category": "IncidentResponse",
+      "total_weighted": 9.0,
+      "max_possible": 10.0,
+      "pct": 90.0,
+      "risk_level": "LOW"
+    },
+    {
+      "category": "BCP",
+      "total_weighted": 7.0,
+      "max_possible": 10.0,
+      "pct": 70.0,
+      "risk_level": "MEDIUM"
+    },
+    {
+      "category": "SupplierMgmt",
+      "total_weighted": 3.5,
+      "max_possible": 7.0,
+      "pct": 50.0,
+      "risk_level": "HIGH"
+    },
+    {
+      "category": "Compliance",
+      "total_weighted": 8.5,
+      "max_possible": 9.0,
+      "pct": 94.4,
+      "risk_level": "LOW"
+    }
+  ],
+  "overall_score": 68.2,
+  "risk_rating": "HIGH",
+  "top_risks": [
+    "[DataProtection] Is customer data classified and labelled according to sensitivity?",
+    "[DataProtection] Are data retention and deletion policies documented and enforced?",
+    "[Encryption] Is all customer data encrypted at rest using AES-256 or equivalent?",
+    "[Encryption] Are encryption keys managed via a dedicated KMS/HSM?"
+  ],
+  "remediation_checklist": [
+    "[DataProtection] Is customer data classified and labelled according to sensitivity? \u2014 Vendor response was NO. Require remediation plan with committed timeline before contract signing.",
+    "[DataProtection] Are data retention and deletion policies documented and enforced? \u2014 Vendor response was NO. Require remediation plan with committed timeline before contract signing.",
+    "[DataProtection] Does the vendor maintain a data inventory or data flow map? \u2014 Vendor response was PARTIAL. Request evidence of partial implementation and gap-closure roadmap.",
+    "[Encryption] Is all customer data encrypted at rest using AES-256 or equivalent? \u2014 Vendor response was NO. Require remediation plan with committed timeline before contract signing.",
+    "[Encryption] Are encryption keys managed via a dedicated KMS/HSM? \u2014 Vendor response was NO. Require remediation plan with committed timeline before contract signing.",
+    "[Encryption] Is there a documented key rotation policy with a maximum 90-day rotation window? \u2014 Vendor response was PARTIAL. Request evidence of partial implementation and gap-closure roadmap.",
+    "[IncidentResponse] Are incident response tabletop exercises conducted annually? \u2014 Vendor response was PARTIAL. Request evidence of partial implementation and gap-closure roadmap.",
+    "[BCP] Are RTO and RPO defined for all critical systems? \u2014 Vendor response was PARTIAL. Request evidence of partial implementation and gap-closure roadmap.",
+    "[BCP] Does the vendor maintain geographically diverse disaster recovery sites? \u2014 Vendor response was NO. Require remediation plan with committed timeline before contract signing.",
+    "[SupplierMgmt] Does the vendor assess security posture of their own sub-processors? \u2014 Vendor response was PARTIAL. Request evidence of partial implementation and gap-closure roadmap.",
+    "[SupplierMgmt] Does the vendor maintain a supplier risk register? \u2014 Vendor response was NO. Require remediation plan with committed timeline before contract signing.",
+    "[Compliance] Does the vendor have a documented vulnerability disclosure program? \u2014 Vendor response was PARTIAL. Request evidence of partial implementation and gap-closure roadmap."
+  ]
+}

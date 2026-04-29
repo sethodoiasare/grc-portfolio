@@ -1,0 +1,412 @@
+{
+  "audit_date": "2026-04-29T07:20:34.122640+00:00",
+  "scope": "15 AD accounts, 15 HR records, 10 ITSM tickets reviewed",
+  "summary": {
+    "total": 13,
+    "by_severity": {
+      "CRITICAL": 2,
+      "HIGH": 6,
+      "MEDIUM": 5
+    },
+    "by_type": {
+      "LEAVER_ACTIVE": 2,
+      "ORPHANED": 2,
+      "MFA_MISSING": 7,
+      "SELF_APPROVAL": 2
+    }
+  },
+  "violations": [
+    {
+      "violation_id": "dedd9f4c-1b42-4cae-9bb9-736132492f75",
+      "type": "LEAVER_ACTIVE",
+      "severity": "CRITICAL",
+      "description": "Leaver leaver.one (ID: EMP005) still has an enabled AD account. Termination date: 2026-03-30 07:20:34.122275+00:00",
+      "affected_accounts": [
+        "leaver.one"
+      ],
+      "control_mapping": {
+        "control": "Removal of access rights for leavers",
+        "control_id": "IAC-01/D",
+        "d_statement": "D1,D3,D5"
+      },
+      "remediation": "Disable AD account immediately. Revoke all group memberships. Confirm access removal with application owners.",
+      "found_at": "2026-04-29T07:20:34.122360+00:00"
+    },
+    {
+      "violation_id": "d5dc49f7-d927-4576-b9bb-24fad0135fc4",
+      "type": "LEAVER_ACTIVE",
+      "severity": "CRITICAL",
+      "description": "Leaver leaver.two (ID: EMP006) still has an enabled AD account. Termination date: 2026-02-28 07:20:34.122275+00:00",
+      "affected_accounts": [
+        "leaver.two"
+      ],
+      "control_mapping": {
+        "control": "Removal of access rights for leavers",
+        "control_id": "IAC-01/D",
+        "d_statement": "D1,D3,D5"
+      },
+      "remediation": "Disable AD account immediately. Revoke all group memberships. Confirm access removal with application owners.",
+      "found_at": "2026-04-29T07:20:34.122388+00:00"
+    },
+    {
+      "violation_id": "f9e5695e-0b61-4093-af03-e9f3335a5dff",
+      "type": "ORPHANED",
+      "severity": "HIGH",
+      "description": "Orphaned AD account orphan.user1 (ID: ORPH001) has no matching HR record.",
+      "affected_accounts": [
+        "orphan.user1"
+      ],
+      "control_mapping": {
+        "control": "User registration and de-registration",
+        "control_id": "IAC-02/D",
+        "d_statement": "D4,D5"
+      },
+      "remediation": "Verify whether account is still needed. If not, disable and schedule for deletion per offboarding policy. If still required, update HR records.",
+      "found_at": "2026-04-29T07:20:34.122418+00:00"
+    },
+    {
+      "violation_id": "33940184-4d69-457d-8cac-e620f3494b8e",
+      "type": "ORPHANED",
+      "severity": "HIGH",
+      "description": "Orphaned AD account orphan.user2 (ID: ORPH002) has no matching HR record. Additionally stale (120 days since last logon).",
+      "affected_accounts": [
+        "orphan.user2"
+      ],
+      "control_mapping": {
+        "control": "User registration and de-registration",
+        "control_id": "IAC-02/D",
+        "d_statement": "D4,D5"
+      },
+      "remediation": "Verify whether account is still needed. If not, disable and schedule for deletion per offboarding policy. If still required, update HR records.",
+      "found_at": "2026-04-29T07:20:34.122435+00:00"
+    },
+    {
+      "violation_id": "6e5ca159-ae5c-4c3c-b887-c92e56a89423",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User bob.wilson (ID: EMP003) does not have MFA enabled. ",
+      "affected_accounts": [
+        "bob.wilson"
+      ],
+      "control_mapping": {
+        "control": "Multi-factor authentication",
+        "control_id": "IAC-03/D",
+        "d_statement": "D2,D3"
+      },
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar).",
+      "found_at": "2026-04-29T07:20:34.122452+00:00"
+    },
+    {
+      "violation_id": "79cf7e6e-572c-4210-a511-05d207b415ac",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User leaver.two (ID: EMP006) does not have MFA enabled. ",
+      "affected_accounts": [
+        "leaver.two"
+      ],
+      "control_mapping": {
+        "control": "Multi-factor authentication",
+        "control_id": "IAC-03/D",
+        "d_statement": "D2,D3"
+      },
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar).",
+      "found_at": "2026-04-29T07:20:34.122467+00:00"
+    },
+    {
+      "violation_id": "da7cb0e5-27a9-4426-acaa-54ab76d00b8c",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User orphan.user2 (ID: ORPH002) does not have MFA enabled. ",
+      "affected_accounts": [
+        "orphan.user2"
+      ],
+      "control_mapping": {
+        "control": "Multi-factor authentication",
+        "control_id": "IAC-03/D",
+        "d_statement": "D2,D3"
+      },
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar).",
+      "found_at": "2026-04-29T07:20:34.122477+00:00"
+    },
+    {
+      "violation_id": "6d741f30-b119-466c-a263-41e0558e3064",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User SVC_Monitoring (ID: SVC001) does not have MFA enabled. ",
+      "affected_accounts": [
+        "SVC_Monitoring"
+      ],
+      "control_mapping": {
+        "control": "Multi-factor authentication",
+        "control_id": "IAC-03/D",
+        "d_statement": "D2,D3"
+      },
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar).",
+      "found_at": "2026-04-29T07:20:34.122488+00:00"
+    },
+    {
+      "violation_id": "0bd54a86-74e7-416a-be9e-1c2732ded9cf",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User APP_HRConnector (ID: APP001) does not have MFA enabled. ",
+      "affected_accounts": [
+        "APP_HRConnector"
+      ],
+      "control_mapping": {
+        "control": "Multi-factor authentication",
+        "control_id": "IAC-03/D",
+        "d_statement": "D2,D3"
+      },
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar).",
+      "found_at": "2026-04-29T07:20:34.122498+00:00"
+    },
+    {
+      "violation_id": "22639e73-b1cc-4a0a-b79c-60680852e02a",
+      "type": "MFA_MISSING",
+      "severity": "HIGH",
+      "description": "User admin.jones (ID: EMP009) does not have MFA enabled. Account is a member of privileged group 'Domain Admins'.",
+      "affected_accounts": [
+        "admin.jones"
+      ],
+      "control_mapping": {
+        "control": "Multi-factor authentication",
+        "control_id": "IAC-03/D",
+        "d_statement": "D2,D3"
+      },
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar).",
+      "found_at": "2026-04-29T07:20:34.122510+00:00"
+    },
+    {
+      "violation_id": "02fdd1c1-f8f1-4fd1-85e1-800674b391e5",
+      "type": "MFA_MISSING",
+      "severity": "HIGH",
+      "description": "User server.op (ID: EMP010) does not have MFA enabled. Account is a member of privileged group 'Server Operators'.",
+      "affected_accounts": [
+        "server.op"
+      ],
+      "control_mapping": {
+        "control": "Multi-factor authentication",
+        "control_id": "IAC-03/D",
+        "d_statement": "D2,D3"
+      },
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar).",
+      "found_at": "2026-04-29T07:20:34.122521+00:00"
+    },
+    {
+      "violation_id": "06eae11d-96a4-4d4d-ac21-ae7b2c7f9002",
+      "type": "SELF_APPROVAL",
+      "severity": "HIGH",
+      "description": "Ticket ITSM-005: Requestor EMP008 also acted as Approver for change type 'Privilege Escalation'. Created: 2026-04-28 07:20:34.122292+00:00",
+      "affected_accounts": [
+        "EMP008"
+      ],
+      "control_mapping": {
+        "control": "User access provisioning",
+        "control_id": "IAC-04/D",
+        "d_statement": "D3,D4"
+      },
+      "remediation": "Require a separate approver for all access changes. Implement dual-approval workflow in ITSM. Review ticket for unauthorized access grants.",
+      "found_at": "2026-04-29T07:20:34.122537+00:00"
+    },
+    {
+      "violation_id": "dfb00cd0-7732-407d-a02c-f5c75a27ce54",
+      "type": "SELF_APPROVAL",
+      "severity": "HIGH",
+      "description": "Ticket ITSM-006: Requestor EMP009 also acted as Approver for change type 'Access Request'. Created: 2026-04-25 07:20:34.122292+00:00",
+      "affected_accounts": [
+        "EMP009"
+      ],
+      "control_mapping": {
+        "control": "User access provisioning",
+        "control_id": "IAC-04/D",
+        "d_statement": "D3,D4"
+      },
+      "remediation": "Require a separate approver for all access changes. Implement dual-approval workflow in ITSM. Review ticket for unauthorized access grants.",
+      "found_at": "2026-04-29T07:20:34.122549+00:00"
+    }
+  ],
+  "access_certification_items": [
+    {
+      "violation_id": "dedd9f4c-1b42-4cae-9bb9-736132492f75",
+      "type": "LEAVER_ACTIVE",
+      "severity": "CRITICAL",
+      "description": "Leaver leaver.one (ID: EMP005) still has an enabled AD account. Termination date: 2026-03-30 07:20:34.122275+00:00",
+      "affected_accounts": [
+        "leaver.one"
+      ],
+      "control_id": "IAC-01/D",
+      "action": "REVOKE",
+      "certify_by": "2026-04-30T07:20:34.122572+00:00",
+      "certified_by": "",
+      "remediation": "Disable AD account immediately. Revoke all group memberships. Confirm access removal with application owners."
+    },
+    {
+      "violation_id": "d5dc49f7-d927-4576-b9bb-24fad0135fc4",
+      "type": "LEAVER_ACTIVE",
+      "severity": "CRITICAL",
+      "description": "Leaver leaver.two (ID: EMP006) still has an enabled AD account. Termination date: 2026-02-28 07:20:34.122275+00:00",
+      "affected_accounts": [
+        "leaver.two"
+      ],
+      "control_id": "IAC-01/D",
+      "action": "REVOKE",
+      "certify_by": "2026-04-30T07:20:34.122583+00:00",
+      "certified_by": "",
+      "remediation": "Disable AD account immediately. Revoke all group memberships. Confirm access removal with application owners."
+    },
+    {
+      "violation_id": "f9e5695e-0b61-4093-af03-e9f3335a5dff",
+      "type": "ORPHANED",
+      "severity": "HIGH",
+      "description": "Orphaned AD account orphan.user1 (ID: ORPH001) has no matching HR record.",
+      "affected_accounts": [
+        "orphan.user1"
+      ],
+      "control_id": "IAC-02/D",
+      "action": "REVOKE",
+      "certify_by": "2026-05-06T07:20:34.122591+00:00",
+      "certified_by": "",
+      "remediation": "Verify whether account is still needed. If not, disable and schedule for deletion per offboarding policy. If still required, update HR records."
+    },
+    {
+      "violation_id": "33940184-4d69-457d-8cac-e620f3494b8e",
+      "type": "ORPHANED",
+      "severity": "HIGH",
+      "description": "Orphaned AD account orphan.user2 (ID: ORPH002) has no matching HR record. Additionally stale (120 days since last logon).",
+      "affected_accounts": [
+        "orphan.user2"
+      ],
+      "control_id": "IAC-02/D",
+      "action": "REVOKE",
+      "certify_by": "2026-05-06T07:20:34.122597+00:00",
+      "certified_by": "",
+      "remediation": "Verify whether account is still needed. If not, disable and schedule for deletion per offboarding policy. If still required, update HR records."
+    },
+    {
+      "violation_id": "6e5ca159-ae5c-4c3c-b887-c92e56a89423",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User bob.wilson (ID: EMP003) does not have MFA enabled. ",
+      "affected_accounts": [
+        "bob.wilson"
+      ],
+      "control_id": "IAC-03/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-29T07:20:34.122602+00:00",
+      "certified_by": "",
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar)."
+    },
+    {
+      "violation_id": "79cf7e6e-572c-4210-a511-05d207b415ac",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User leaver.two (ID: EMP006) does not have MFA enabled. ",
+      "affected_accounts": [
+        "leaver.two"
+      ],
+      "control_id": "IAC-03/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-29T07:20:34.122607+00:00",
+      "certified_by": "",
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar)."
+    },
+    {
+      "violation_id": "da7cb0e5-27a9-4426-acaa-54ab76d00b8c",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User orphan.user2 (ID: ORPH002) does not have MFA enabled. ",
+      "affected_accounts": [
+        "orphan.user2"
+      ],
+      "control_id": "IAC-03/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-29T07:20:34.122611+00:00",
+      "certified_by": "",
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar)."
+    },
+    {
+      "violation_id": "6d741f30-b119-466c-a263-41e0558e3064",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User SVC_Monitoring (ID: SVC001) does not have MFA enabled. ",
+      "affected_accounts": [
+        "SVC_Monitoring"
+      ],
+      "control_id": "IAC-03/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-29T07:20:34.122616+00:00",
+      "certified_by": "",
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar)."
+    },
+    {
+      "violation_id": "0bd54a86-74e7-416a-be9e-1c2732ded9cf",
+      "type": "MFA_MISSING",
+      "severity": "MEDIUM",
+      "description": "User APP_HRConnector (ID: APP001) does not have MFA enabled. ",
+      "affected_accounts": [
+        "APP_HRConnector"
+      ],
+      "control_id": "IAC-03/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-29T07:20:34.122620+00:00",
+      "certified_by": "",
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar)."
+    },
+    {
+      "violation_id": "22639e73-b1cc-4a0a-b79c-60680852e02a",
+      "type": "MFA_MISSING",
+      "severity": "HIGH",
+      "description": "User admin.jones (ID: EMP009) does not have MFA enabled. Account is a member of privileged group 'Domain Admins'.",
+      "affected_accounts": [
+        "admin.jones"
+      ],
+      "control_id": "IAC-03/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-06T07:20:34.122624+00:00",
+      "certified_by": "",
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar)."
+    },
+    {
+      "violation_id": "02fdd1c1-f8f1-4fd1-85e1-800674b391e5",
+      "type": "MFA_MISSING",
+      "severity": "HIGH",
+      "description": "User server.op (ID: EMP010) does not have MFA enabled. Account is a member of privileged group 'Server Operators'.",
+      "affected_accounts": [
+        "server.op"
+      ],
+      "control_id": "IAC-03/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-06T07:20:34.122628+00:00",
+      "certified_by": "",
+      "remediation": "Enforce MFA enrollment via conditional access policy. For privileged accounts, require phishing-resistant MFA (FIDO2 or similar)."
+    },
+    {
+      "violation_id": "06eae11d-96a4-4d4d-ac21-ae7b2c7f9002",
+      "type": "SELF_APPROVAL",
+      "severity": "HIGH",
+      "description": "Ticket ITSM-005: Requestor EMP008 also acted as Approver for change type 'Privilege Escalation'. Created: 2026-04-28 07:20:34.122292+00:00",
+      "affected_accounts": [
+        "EMP008"
+      ],
+      "control_id": "IAC-04/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-06T07:20:34.122632+00:00",
+      "certified_by": "",
+      "remediation": "Require a separate approver for all access changes. Implement dual-approval workflow in ITSM. Review ticket for unauthorized access grants."
+    },
+    {
+      "violation_id": "dfb00cd0-7732-407d-a02c-f5c75a27ce54",
+      "type": "SELF_APPROVAL",
+      "severity": "HIGH",
+      "description": "Ticket ITSM-006: Requestor EMP009 also acted as Approver for change type 'Access Request'. Created: 2026-04-25 07:20:34.122292+00:00",
+      "affected_accounts": [
+        "EMP009"
+      ],
+      "control_id": "IAC-04/D",
+      "action": "REVIEW",
+      "certify_by": "2026-05-06T07:20:34.122636+00:00",
+      "certified_by": "",
+      "remediation": "Require a separate approver for all access changes. Implement dual-approval workflow in ITSM. Review ticket for unauthorized access grants."
+    }
+  ]
+}
