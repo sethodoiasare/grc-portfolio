@@ -23,6 +23,8 @@ def main():
     scan_p.add_argument("--itsm-file", type=Path, help="Path to ITSM log CSV")
     scan_p.add_argument("--output", "-o", type=Path, default=Path("data/audit-report.json"),
                         help="Output path for JSON report")
+    scan_p.add_argument("--format", "-f", choices=["json", "pdf", "both"], default="json",
+                        help="Output format (default: json)")
     scan_p.add_argument("--demo", action="store_true",
                         help="Run against built-in demo data")
     scan_p.add_argument("--cert-report", action="store_true",
@@ -52,11 +54,20 @@ def main():
             itsm_count=len(itsm_tickets),
         )
 
-        path = export_json(report, args.output)
-        _print_summary(report)
-        if args.cert_report:
-            _print_certification(report)
-        print(f"\nReport saved to {path.resolve()}")
+        fmt = args.format
+
+        if fmt in ("json", "both"):
+            path = export_json(report, args.output)
+            _print_summary(report)
+            if args.cert_report:
+                _print_certification(report)
+            print(f"\nJSON report saved to {path.resolve()}")
+
+        if fmt in ("pdf", "both"):
+            from .reporter import export_pdf
+            pdf_path = args.output.with_suffix(".pdf")
+            export_pdf(report, pdf_path)
+            print(f"PDF report saved to {pdf_path.resolve()}")
 
     else:
         parser.print_help()

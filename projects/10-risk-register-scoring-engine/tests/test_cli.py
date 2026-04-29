@@ -36,6 +36,30 @@ def test_export_json():
         assert data["metadata"]["total_risks"] >= 12
 
 
+def test_export_all_formats():
+    """Demo --format all produces JSON, CSV, and PDF."""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out = Path(tmpdir) / "test-export.json"
+        with patch.object(sys, "argv", [
+            "cli", "demo", "--output", str(out), "--format", "all",
+        ]):
+            try:
+                main()
+            except SystemExit:
+                pass
+        json_path = Path(tmpdir) / "test-export.json"
+        csv_path = Path(tmpdir) / "test-export.csv"
+        pdf_path = Path(tmpdir) / "test-export.pdf"
+        assert json_path.exists()
+        assert csv_path.exists()
+        assert pdf_path.exists()
+        assert pdf_path.stat().st_size > 0
+        # Verify JSON content
+        data = json.loads(json_path.read_text())
+        assert "risks" in data
+        assert data["metadata"]["total_risks"] >= 12
+
+
 def test_matrix_display():
     """Matrix prints without error."""
     # Create a demo and then run matrix

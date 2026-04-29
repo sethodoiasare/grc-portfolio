@@ -27,8 +27,8 @@ def main() -> None:
                         help="Framework to map against (default: all)")
     scan_p.add_argument("--output", "-o", type=Path, default=Path("data/coverage-report.json"),
                         help="Output path for JSON report")
-    scan_p.add_argument("--csv", "-c", type=Path, default=None,
-                        help="Optional output path for CSV report")
+    scan_p.add_argument("--format", "-F", choices=["json", "csv", "pdf", "all"], default="json",
+                        help="Output format (default: json)")
     scan_p.add_argument("--demo", action="store_true",
                         help="Run against built-in demo policy document")
 
@@ -105,12 +105,26 @@ def _run_mapping(parsed, args) -> None:
 
     print_summary(results)
 
-    json_path = save_json_report(results, str(args.output))
-    print(f"  JSON report saved to: {json_path}")
+    output_base = Path(args.output)
+    fmt = args.format
 
-    if args.csv:
-        csv_path = save_csv_report(results, str(args.csv))
-        print(f"  CSV report saved to:   {csv_path}")
+    # JSON output
+    if fmt in ("json", "all"):
+        json_path = save_json_report(results, str(output_base))
+        print(f"  JSON report saved to: {json_path}")
+
+    # CSV output
+    if fmt in ("csv", "all"):
+        csv_base = output_base.with_suffix(".csv")
+        csv_path = save_csv_report(results, str(csv_base))
+        print(f"  CSV report saved to:  {csv_path}")
+
+    # PDF output
+    if fmt in ("pdf", "all"):
+        from .reporter import export_pdf
+        pdf_base = output_base.with_suffix(".pdf")
+        pdf_path = export_pdf(results, str(pdf_base))
+        print(f"  PDF report saved to:  {pdf_path}")
 
     # Summarise total gaps
     for r in results:

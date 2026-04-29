@@ -7,10 +7,10 @@ test:
 	pytest tests/ -v --tb=short
 
 demo:
-	python3 -m src.cli score --demo --output data/demo-vendor-assessment.json --format both
+	python3 -m src.cli score --demo --output data/demo-vendor-assessment.json --format all
 	@echo "Reports saved to data/"
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__
 	rm -rf .pytest_cache
-	rm -f data/*.json data/*.md
+	rm -f data/*.json data/*.md data/*.pdf

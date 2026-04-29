@@ -19,10 +19,10 @@ def main():
     sub = parser.add_subparsers(dest="command")
 
     score_p = sub.add_parser("score", help="Score a vendor questionnaire")
-    score_p.add_argument("--file", "-f", type=Path, help="Path to questionnaire CSV or Excel file")
+    score_p.add_argument("--file", type=Path, help="Path to questionnaire CSV or Excel file")
     score_p.add_argument("--output", "-o", type=Path, default=Path("data/vendor-assessment.json"),
                          help="Output path for JSON/MD report")
-    score_p.add_argument("--format", choices=["json", "md", "both"], default="json",
+    score_p.add_argument("--format", "-f", choices=["json", "md", "pdf", "all"], default="json",
                          help="Output format (default: json)")
     score_p.add_argument("--demo", action="store_true", help="Run with built-in demo data")
 
@@ -43,13 +43,18 @@ def main():
         print_assessment(assessment)
 
         base = args.output
-        if args.format in ("json", "both"):
+        if args.format in ("json", "all"):
             json_path = save_report_json(assessment, str(base))
             print(f"JSON report saved to {json_path}")
-        if args.format in ("md", "both"):
+        if args.format in ("md", "all"):
             md_path = base.with_suffix(".md")
             save_report_md(assessment, str(md_path))
             print(f"Markdown report saved to {md_path}")
+        if args.format in ("pdf", "all"):
+            from .reporter import export_pdf
+            pdf_path = base.with_suffix(".pdf")
+            path = export_pdf(assessment, str(pdf_path))
+            print(f"PDF report saved to {path}")
 
     else:
         parser.print_help()

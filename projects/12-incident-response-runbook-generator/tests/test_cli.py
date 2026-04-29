@@ -74,3 +74,36 @@ class TestGenerateCommand:
         assert len(json_files) == 1
         data = json.loads(json_files[0].read_text())
         assert data["incident_type"] == "credential"
+
+    def test_generate_pdf_format(self, tmp_path):
+        output_dir = tmp_path / "output"
+        result = _run_cli(["generate", "--type", "ransomware", "--format", "pdf",
+                           "--output-dir", str(output_dir)])
+        assert result.returncode == 0
+        pdf_files = list(output_dir.glob("*.pdf"))
+        assert len(pdf_files) == 1
+        assert pdf_files[0].stat().st_size > 0
+
+    def test_generate_all_format(self, tmp_path):
+        output_dir = tmp_path / "output"
+        result = _run_cli(["generate", "--type", "ransomware", "--format", "all",
+                           "--output-dir", str(output_dir)])
+        assert result.returncode == 0
+        files = list(output_dir.glob("*"))
+        suffixes = {f.suffix for f in files}
+        assert ".md" in suffixes
+        assert ".json" in suffixes
+        assert ".pdf" in suffixes
+        assert len(files) == 3
+
+    def test_demo_all_format(self, tmp_path):
+        output_dir = tmp_path / "demo_output"
+        result = _run_cli(["generate", "--demo", "--format", "all",
+                           "--output-dir", str(output_dir)])
+        assert result.returncode == 0, f"stderr: {result.stderr}"
+        assert "Demo complete" in result.stdout
+        files = list(output_dir.glob("*"))
+        suffixes = {f.suffix for f in files}
+        assert ".md" in suffixes
+        assert ".json" in suffixes
+        assert ".pdf" in suffixes

@@ -45,9 +45,9 @@ def main():
     )
     gen_p.add_argument(
         "--format", "-f",
-        choices=["md", "json", "both"],
-        default="both",
-        help="Output format (default: both)",
+        choices=["md", "json", "pdf", "all"],
+        default="md",
+        help="Output format (default: md)",
     )
     gen_p.add_argument(
         "--demo",

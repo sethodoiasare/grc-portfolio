@@ -16,7 +16,7 @@ from .register import (
 )
 from .reporter import (
     print_risk_matrix, print_risk_summary, print_risk_detail,
-    save_register_json, save_register_csv,
+    save_register_json, save_register_csv, export_pdf,
 )
 from .demo_data import build_demo_register
 
@@ -192,9 +192,9 @@ def main():
                           help="Register file path")
 
     # -- export --
-    export_p = sub.add_parser("export", help="Export register to JSON or CSV")
-    export_p.add_argument("--format", "-fmt", choices=["json", "csv"], default="json",
-                          help="Export format")
+    export_p = sub.add_parser("export", help="Export register to JSON, CSV, PDF or all three")
+    export_p.add_argument("--format", "-fmt", choices=["json", "csv", "pdf", "all"], default="json",
+                          help="Output format (default: json)")
     export_p.add_argument("--output", "-o", type=Path, required=True, help="Output file path")
     export_p.add_argument("--file", "-f", type=Path, default=Path("data/risk-register.json"),
                           help="Register file path")
@@ -203,6 +203,8 @@ def main():
     demo_p = sub.add_parser("demo", help="Load demo data and display matrix + summary + export")
     demo_p.add_argument("--output", "-o", type=Path, default=Path("data/demo-risk-register.json"),
                         help="Export path for demo register")
+    demo_p.add_argument("--format", "-fmt", choices=["json", "csv", "pdf", "all"], default="json",
+                        help="Output format (default: json)")
 
     args = parser.parse_args()
 
@@ -210,8 +212,27 @@ def main():
         register = build_demo_register()
         print_risk_summary(register)
         print_risk_matrix(register)
-        path = save_register_json(register, args.output)
-        print(f"  Demo register exported to {path}")
+
+        output_base = args.output
+        parent = output_base.parent
+        stem = output_base.stem
+        fmt = args.format
+
+        if fmt in ("json", "all"):
+            json_path = save_register_json(register, parent / f"{stem}.json")
+            print(f"  Demo register JSON exported to {json_path}")
+
+        if fmt in ("csv", "all"):
+            csv_path = save_register_csv(register, parent / f"{stem}.csv")
+            print(f"  Demo register CSV exported to {csv_path}")
+
+        if fmt in ("pdf", "all"):
+            try:
+                pdf_path = export_pdf(register, str(parent / f"{stem}.pdf"))
+                print(f"  Demo register PDF exported to {pdf_path}")
+            except ImportError as e:
+                print(f"  [WARNING] {e}")
+
         overdue = get_overdue_reviews(register)
         if overdue:
             print(f"\n  Overdue reviews: {len(overdue)}")
@@ -285,11 +306,32 @@ def main():
 
     if args.command == "export":
         register = _load_register(args.file)
-        if args.format == "csv":
+
+        if args.format == "all":
+            parent = args.output.parent
+            stem = args.output.stem
+            jp = save_register_json(register, parent / f"{stem}.json")
+            print(f"  Register JSON exported to {jp} ({len(register.risks)} risks)")
+            cp = save_register_csv(register, parent / f"{stem}.csv")
+            print(f"  Register CSV exported to {cp} ({len(register.risks)} risks)")
+            try:
+                pp = export_pdf(register, str(parent / f"{stem}.pdf"))
+                print(f"  Register PDF exported to {pp} ({len(register.risks)} risks)")
+            except ImportError as e:
+                print(f"  [WARNING] {e}")
+        elif args.format == "csv":
             path = save_register_csv(register, args.output)
+            print(f"  Register exported to {path} ({len(register.risks)} risks)")
+        elif args.format == "pdf":
+            try:
+                path = export_pdf(register, str(args.output))
+                print(f"  Register exported to {path} ({len(register.risks)} risks)")
+            except ImportError as e:
+                print(f"  [ERROR] {e}")
+                sys.exit(1)
         else:
             path = save_register_json(register, args.output)
-        print(f"  Register exported to {path} ({len(register.risks)} risks)")
+            print(f"  Register exported to {path} ({len(register.risks)} risks)")
         return
 
     parser.print_help()

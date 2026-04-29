@@ -7,10 +7,10 @@ test:
 	python3 -m pytest tests/ -v --tb=short
 
 demo:
-	python3 -m src.cli scan --demo --output data/audit-report.json --cert-report
-	@echo "Report saved to data/audit-report.json"
+	python3 -m src.cli scan --demo --output data/audit-report.json --cert-report --format both
+	@echo "Report saved to data/audit-report.json and data/audit-report.pdf"
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__
 	rm -rf .pytest_cache
-	rm -f data/*.json data/samples/*.json
+	rm -f data/*.json data/*.pdf data/samples/*.json

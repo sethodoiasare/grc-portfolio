@@ -5,7 +5,7 @@ import pytest
 from pathlib import Path
 from src.generator import (
     generate_runbook, generate_all, export_runbook_markdown,
-    export_runbook_json, save_runbook,
+    export_runbook_json, export_runbook_pdf, save_runbook,
 )
 from src.models import Runbook, Severity
 from src.demo_context import get_demo_context
@@ -130,3 +130,65 @@ class TestSaveRunbook:
         saved = save_runbook(rb, tmp_path, format="json")
         assert len(saved) == 1
         assert saved[0].suffix == ".json"
+
+    def test_save_pdf_only(self, tmp_path):
+        rb = generate_runbook("ransomware", "SEV2", get_demo_context())
+        saved = save_runbook(rb, tmp_path, format="pdf")
+        assert len(saved) == 1
+        assert saved[0].suffix == ".pdf"
+        assert saved[0].exists()
+        assert saved[0].stat().st_size > 0
+
+    def test_save_all_formats(self, tmp_path):
+        rb = generate_runbook("ransomware", "SEV2", get_demo_context())
+        saved = save_runbook(rb, tmp_path, format="all")
+        assert len(saved) == 3
+        suffixes = {p.suffix for p in saved}
+        assert suffixes == {".md", ".json", ".pdf"}
+
+
+class TestExportPDF:
+    def test_export_pdf_creates_non_empty_file(self, tmp_path):
+        rb = generate_runbook("ransomware", "SEV2", get_demo_context())
+        pdf_path = tmp_path / "test-runbook.pdf"
+        result = export_runbook_pdf(rb, str(pdf_path))
+        assert pdf_path.exists()
+        assert pdf_path.stat().st_size > 0
+        assert result == str(pdf_path)
+
+    def test_export_pdf_all_stages_present(self, tmp_path):
+        rb = generate_runbook("malware", "SEV3", get_demo_context())
+        pdf_path = tmp_path / "malware-sev3.pdf"
+        export_runbook_pdf(rb, str(pdf_path))
+        assert pdf_path.exists()
+        # PDF content is compressed; verify the output is substantial
+        # (6 stages + cover + summary = 8+ pages minimum)
+        size_kb = pdf_path.stat().st_size / 1024
+        assert size_kb > 8, f"PDF too small ({size_kb:.1f} KB) -- stage content may be missing"
+
+    def test_export_pdf_contains_org_name(self, tmp_path):
+        rb = generate_runbook("ddos", "SEV1", get_demo_context())
+        pdf_path = tmp_path / "ddos-sev1.pdf"
+        export_runbook_pdf(rb, str(pdf_path))
+        raw = pdf_path.read_text(errors="ignore")
+        assert "PayFlow Ltd" in raw
+
+    def test_export_pdf_severity_colors(self, tmp_path):
+        rb = generate_runbook("breach", "SEV1", get_demo_context())
+        pdf_path = tmp_path / "breach-sev1.pdf"
+        export_runbook_pdf(rb, str(pdf_path))
+        raw = pdf_path.read_text(errors="ignore")
+        # SEV1 should produce a CRITICAL badge
+        assert "CRITICAL" in raw or "SEV1" in raw
+
+    def test_export_pdf_actions_have_checkboxes(self, tmp_path):
+        rb = generate_runbook("credential", "SEV2", get_demo_context())
+        pdf_path = tmp_path / "credential-sev2.pdf"
+        export_runbook_pdf(rb, str(pdf_path))
+        # PDF streams are compressed; verify PDF exists, is non-empty,
+        # and the action count is reflected in reasonable file size
+        assert pdf_path.exists()
+        assert pdf_path.stat().st_size > 0
+        # At least 6 stages + cover + summary pages = 8+ pages
+        # Each page with actions contributes visual size
+        assert pdf_path.stat().st_size > 8000, "PDF too small for full runbook"

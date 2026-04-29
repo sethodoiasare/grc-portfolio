@@ -41,3 +41,19 @@ def test_demo_generates_json_output(tmp_path):
     assert len(data["category_scores"]) == 7
     assert len(data["top_risks"]) > 0
     assert len(data["remediation_checklist"]) > 0
+
+
+def test_demo_generates_pdf_output(tmp_path):
+    project_dir = Path(__file__).resolve().parent.parent
+    out = tmp_path / "test-output.pdf"
+    result = subprocess.run(
+        [sys.executable, "-m", "src.cli", "score", "--demo", "--output", str(out), "--format", "pdf"],
+        cwd=str(project_dir),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0, f"CLI stderr:\n{result.stderr}"
+    assert out.exists()
+    assert out.stat().st_size > 1000  # PDF should be non-trivial
+    content = out.read_bytes()
+    assert content.startswith(b"%PDF-")

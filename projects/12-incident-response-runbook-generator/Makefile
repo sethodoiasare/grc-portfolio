@@ -7,10 +7,10 @@ test:
 	python3 -m pytest tests/ -v --tb=short
 
 demo:
-	python3 -m src.cli generate --demo --output-dir data
+	python3 -m src.cli generate --demo --output-dir data --format all
 	@echo "Demo runbooks saved to data/"
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__
 	rm -rf .pytest_cache
-	rm -f data/*.md data/*.json
+	rm -f data/*.md data/*.json data/*.pdf
