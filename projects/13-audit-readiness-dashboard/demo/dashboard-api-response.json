@@ -1,0 +1,618 @@
+{
+    "projects": [
+        {
+            "project_id": "P1",
+            "name": "ITGC Evidence Analyser",
+            "type": "WEB",
+            "status": "COMPLETE",
+            "test_count": 80,
+            "last_audit_date": "2026-04-22",
+            "controls_covered": [
+                "IAM",
+                "Audit & Assurance"
+            ],
+            "evidence_freshness_days": 7,
+            "rag": "GREEN",
+            "description": "AI-powered CLI and REST API for ITGC audit evidence assessment using Claude AI.",
+            "port": 8001
+        },
+        {
+            "project_id": "P2",
+            "name": "Evidence Collection Automation",
+            "type": "WEB",
+            "status": "COMPLETE",
+            "test_count": 106,
+            "last_audit_date": "2026-04-15",
+            "controls_covered": [
+                "IAM",
+                "Audit & Assurance",
+                "SIEM & Monitoring"
+            ],
+            "evidence_freshness_days": 14,
+            "rag": "GREEN",
+            "description": "Automated evidence collection from 7 enterprise systems + IAM lifecycle simulator.",
+            "port": 8002
+        },
+        {
+            "project_id": "P3",
+            "name": "Vuln SLA Tracker",
+            "type": "WEB",
+            "status": "COMPLETE",
+            "test_count": 70,
+            "last_audit_date": "2026-04-26",
+            "controls_covered": [
+                "Vulnerability Management",
+                "SIEM & Monitoring"
+            ],
+            "evidence_freshness_days": 3,
+            "rag": "GREEN",
+            "description": "Scanner ingestion, SLA breach engine, and Plotly dashboards for vulnerability tracking.",
+            "port": 8003
+        },
+        {
+            "project_id": "P4",
+            "name": "DevSecOps Evidence Collector",
+            "type": "CLI",
+            "status": "COMPLETE",
+            "test_count": 79,
+            "last_audit_date": "2026-04-08",
+            "controls_covered": [
+                "DevSecOps",
+                "Endpoint Security"
+            ],
+            "evidence_freshness_days": 21,
+            "rag": "GREEN",
+            "description": "GitHub Action composite action with Python packager and HMAC signing for DevSecOps evidence.",
+            "port": null
+        },
+        {
+            "project_id": "P5",
+            "name": "Cloud Posture Snapshot",
+            "type": "CLI",
+            "status": "COMPLETE",
+            "test_count": 73,
+            "last_audit_date": "2026-03-30",
+            "controls_covered": [
+                "Cloud Security",
+                "Network Security",
+                "Endpoint Security"
+            ],
+            "evidence_freshness_days": 30,
+            "rag": "AMBER",
+            "description": "52 CIS checks across AWS, Azure, and GCP with PDF reporting.",
+            "port": null
+        },
+        {
+            "project_id": "P6",
+            "name": "Policy-as-Code Starter Kit",
+            "type": "CLI",
+            "status": "NEEDS_REVIEW",
+            "test_count": 55,
+            "last_audit_date": "2026-03-15",
+            "controls_covered": [
+                "IAM",
+                "Network Security",
+                "Cloud Security"
+            ],
+            "evidence_freshness_days": 45,
+            "rag": "AMBER",
+            "description": "12 OPA Rego policies + Python evaluator for IAM least privilege, encryption, and logging.",
+            "port": null
+        },
+        {
+            "project_id": "P7",
+            "name": "Security Metrics Pack",
+            "type": "CLI",
+            "status": "COMPLETE",
+            "test_count": 28,
+            "last_audit_date": "2026-02-28",
+            "controls_covered": [
+                "SIEM & Monitoring"
+            ],
+            "evidence_freshness_days": 60,
+            "rag": "RED",
+            "description": "MTTD/MTTR calculations, alert quality metrics, vuln SLA tracking with matplotlib charts.",
+            "port": null
+        },
+        {
+            "project_id": "P8",
+            "name": "Data Classification Scanner",
+            "type": "CLI",
+            "status": "COMPLETE",
+            "test_count": 36,
+            "last_audit_date": "2026-04-19",
+            "controls_covered": [
+                "Data Protection & DLP"
+            ],
+            "evidence_freshness_days": 10,
+            "rag": "GREEN",
+            "description": "14 regex patterns for PII, PCI, PHI, and secrets detection with classification reports.",
+            "port": null
+        },
+        {
+            "project_id": "P9",
+            "name": "Control Coverage Mapper",
+            "type": "CLI",
+            "status": "COMPLETE",
+            "test_count": 59,
+            "last_audit_date": "2026-04-24",
+            "controls_covered": [
+                "Compliance",
+                "IAM",
+                "Data Protection & DLP"
+            ],
+            "evidence_freshness_days": 5,
+            "rag": "GREEN",
+            "description": "Parses policy documents and maps controls across 4 frameworks with heatmap generation.",
+            "port": null
+        },
+        {
+            "project_id": "P10",
+            "name": "Risk Register + Scoring Engine",
+            "type": "CLI",
+            "status": "COMPLETE",
+            "test_count": 63,
+            "last_audit_date": "2026-04-17",
+            "controls_covered": [
+                "Risk Management",
+                "Vulnerability Management"
+            ],
+            "evidence_freshness_days": 12,
+            "rag": "GREEN",
+            "description": "CVSS v3.1 + SSVC v2 scoring engine with 5x5 risk matrix, CRUD, and acceptance workflows.",
+            "port": null
+        },
+        {
+            "project_id": "P11",
+            "name": "Vendor Security Questionnaire",
+            "type": "CLI",
+            "status": "NEEDS_REVIEW",
+            "test_count": 31,
+            "last_audit_date": "2026-03-10",
+            "controls_covered": [
+                "Supplier Security",
+                "Data Protection & DLP"
+            ],
+            "evidence_freshness_days": 50,
+            "rag": "AMBER",
+            "description": "Weighted scoring across 7 categories for third-party risk assessment questionnaires.",
+            "port": null
+        },
+        {
+            "project_id": "P12",
+            "name": "Incident Response Runbook Gen",
+            "type": "CLI",
+            "status": "COMPLETE",
+            "test_count": 59,
+            "last_audit_date": "2026-04-21",
+            "controls_covered": [
+                "Incident Response"
+            ],
+            "evidence_freshness_days": 8,
+            "rag": "GREEN",
+            "description": "6 incident type templates with 230+ actions and AI-assisted customisation.",
+            "port": null
+        }
+    ],
+    "controls": [
+        {
+            "control_id": "C01",
+            "control_name": "User Registration & De-registration",
+            "category": "Access Control",
+            "covered_by": [
+                "P1",
+                "P2",
+                "P6"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-15"
+        },
+        {
+            "control_id": "C02",
+            "control_name": "User Access Provisioning",
+            "category": "Access Control",
+            "covered_by": [
+                "P1",
+                "P2"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-15"
+        },
+        {
+            "control_id": "C03",
+            "control_name": "Privileged Access Management",
+            "category": "Access Control",
+            "covered_by": [
+                "P1",
+                "P2",
+                "P6"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-22"
+        },
+        {
+            "control_id": "C04",
+            "control_name": "Access Rights Review",
+            "category": "Access Control",
+            "covered_by": [
+                "P2",
+                "P9"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-03-15"
+        },
+        {
+            "control_id": "C05",
+            "control_name": "Access Removal for Leavers",
+            "category": "Access Control",
+            "covered_by": [
+                "P2"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-15"
+        },
+        {
+            "control_id": "C06",
+            "control_name": "Multi-Factor Authentication",
+            "category": "Access Control",
+            "covered_by": [
+                "P6"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-03-15"
+        },
+        {
+            "control_id": "C07",
+            "control_name": "Secure Log-On Procedures",
+            "category": "Access Control",
+            "covered_by": [
+                "P1",
+                "P6"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-22"
+        },
+        {
+            "control_id": "C08",
+            "control_name": "Mobile Device Management",
+            "category": "Endpoint Security",
+            "covered_by": [
+                "P4",
+                "P5"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-08"
+        },
+        {
+            "control_id": "C09",
+            "control_name": "Anti-Malware Controls",
+            "category": "Endpoint Security",
+            "covered_by": [
+                "P4",
+                "P5"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-08"
+        },
+        {
+            "control_id": "C10",
+            "control_name": "Endpoint DLP",
+            "category": "Endpoint Security",
+            "covered_by": [
+                "P4"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-03-30"
+        },
+        {
+            "control_id": "C11",
+            "control_name": "Endpoint Detection & Response (EDR)",
+            "category": "Endpoint Security",
+            "covered_by": [
+                "P4",
+                "P5"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-08"
+        },
+        {
+            "control_id": "C12",
+            "control_name": "Remote Access",
+            "category": "Network Security",
+            "covered_by": [
+                "P5",
+                "P6"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-03-30"
+        },
+        {
+            "control_id": "C13",
+            "control_name": "Firewall Rule Management",
+            "category": "Network Security",
+            "covered_by": [
+                "P5",
+                "P6"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-03-30"
+        },
+        {
+            "control_id": "C14",
+            "control_name": "IDS/IPS",
+            "category": "Network Security",
+            "covered_by": [
+                "P5"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-03-30"
+        },
+        {
+            "control_id": "C15",
+            "control_name": "Web Application Firewall (WAF)",
+            "category": "Network Security",
+            "covered_by": [
+                "P5",
+                "P6"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-03-30"
+        },
+        {
+            "control_id": "C16",
+            "control_name": "Network Segregation",
+            "category": "Network Security",
+            "covered_by": [
+                "P6"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-03-15"
+        },
+        {
+            "control_id": "C17",
+            "control_name": "Email DLP",
+            "category": "Data Protection",
+            "covered_by": [
+                "P8",
+                "P11"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-19"
+        },
+        {
+            "control_id": "C18",
+            "control_name": "Information Classification",
+            "category": "Data Protection",
+            "covered_by": [
+                "P8",
+                "P9"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-24"
+        },
+        {
+            "control_id": "C19",
+            "control_name": "Removable Media Controls",
+            "category": "Data Protection",
+            "covered_by": [
+                "P8"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-04-19"
+        },
+        {
+            "control_id": "C20",
+            "control_name": "Privacy & PII Protection",
+            "category": "Data Protection",
+            "covered_by": [
+                "P8",
+                "P9",
+                "P11"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-24"
+        },
+        {
+            "control_id": "C21",
+            "control_name": "Patch Management",
+            "category": "Vulnerability Management",
+            "covered_by": [
+                "P3",
+                "P10"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-26"
+        },
+        {
+            "control_id": "C22",
+            "control_name": "Technical Vulnerability Management",
+            "category": "Vulnerability Management",
+            "covered_by": [
+                "P3",
+                "P10"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-26"
+        },
+        {
+            "control_id": "C23",
+            "control_name": "Penetration Testing",
+            "category": "Vulnerability Management",
+            "covered_by": [
+                "P10"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-04-17"
+        },
+        {
+            "control_id": "C24",
+            "control_name": "Hardening Standards Compliance",
+            "category": "Vulnerability Management",
+            "covered_by": [
+                "P5",
+                "P6"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-03-30"
+        },
+        {
+            "control_id": "C25",
+            "control_name": "Security Event Logging",
+            "category": "SIEM & Monitoring",
+            "covered_by": [
+                "P2",
+                "P3",
+                "P7"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-26"
+        },
+        {
+            "control_id": "C26",
+            "control_name": "Incident Event Management",
+            "category": "SIEM & Monitoring",
+            "covered_by": [
+                "P3",
+                "P7"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-02-28"
+        },
+        {
+            "control_id": "C27",
+            "control_name": "Alert Monitoring & Response",
+            "category": "SIEM & Monitoring",
+            "covered_by": [
+                "P7"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-02-28"
+        },
+        {
+            "control_id": "C28",
+            "control_name": "Incident Response Plan",
+            "category": "Incident Response",
+            "covered_by": [
+                "P12"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-21"
+        },
+        {
+            "control_id": "C29",
+            "control_name": "Incident Classification",
+            "category": "Incident Response",
+            "covered_by": [
+                "P12"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-21"
+        },
+        {
+            "control_id": "C30",
+            "control_name": "Supplier Security Agreements",
+            "category": "Supplier Security",
+            "covered_by": [
+                "P11"
+            ],
+            "status": "PARTIAL",
+            "last_verified": "2026-03-10"
+        },
+        {
+            "control_id": "C31",
+            "control_name": "Supplier Service Monitoring",
+            "category": "Supplier Security",
+            "covered_by": [
+                "P11"
+            ],
+            "status": "GAP",
+            "last_verified": "2026-04-29"
+        },
+        {
+            "control_id": "C32",
+            "control_name": "Risk Assessment Framework",
+            "category": "Risk Management",
+            "covered_by": [
+                "P10"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-17"
+        },
+        {
+            "control_id": "C33",
+            "control_name": "Policy-to-Control Mapping",
+            "category": "Compliance",
+            "covered_by": [
+                "P9"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-24"
+        },
+        {
+            "control_id": "C34",
+            "control_name": "Audit Readiness Tracking",
+            "category": "Compliance",
+            "covered_by": [
+                "P13"
+            ],
+            "status": "COVERED",
+            "last_verified": "2026-04-29"
+        }
+    ],
+    "deadlines": [
+        {
+            "id": "DL1",
+            "description": "Annual IAM Control Review \u2014 Privileged Access Management (C03)",
+            "date": "2026-05-13",
+            "days_remaining": 14,
+            "related_control": "C03",
+            "priority": "HIGH"
+        },
+        {
+            "id": "DL2",
+            "description": "Q2 Vulnerability Management Audit \u2014 Patch Compliance Reporting (C21/C22)",
+            "date": "2026-05-20",
+            "days_remaining": 21,
+            "related_control": "C21",
+            "priority": "HIGH"
+        },
+        {
+            "id": "DL3",
+            "description": "Supplier Risk Re-assessment \u2014 Vendor Questionnaires due (C30/C31)",
+            "date": "2026-06-03",
+            "days_remaining": 35,
+            "related_control": "C30",
+            "priority": "MEDIUM"
+        },
+        {
+            "id": "DL4",
+            "description": "Cloud Security Posture Review \u2014 CIS Benchmarks Refresh (C12/C13/C14)",
+            "date": "2026-06-28",
+            "days_remaining": 60,
+            "related_control": "C12",
+            "priority": "MEDIUM"
+        },
+        {
+            "id": "DL5",
+            "description": "Data Privacy Compliance Check \u2014 PII Protection Review (C20)",
+            "date": "2026-07-23",
+            "days_remaining": 85,
+            "related_control": "C20",
+            "priority": "LOW"
+        }
+    ],
+    "overall_rag": "RED",
+    "summary": {
+        "total_projects": 12,
+        "total_tests": 739,
+        "controls_covered": 23,
+        "controls_total": 34,
+        "controls_gap": 1,
+        "controls_partial": 10,
+        "upcoming_deadlines": 5,
+        "projects_green": 8,
+        "projects_amber": 3,
+        "projects_red": 1
+    },
+    "generated_at": "2026-04-29T10:23:07.621099"
+}
