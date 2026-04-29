@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Readiness Dashboard — GRC Portfolio</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <meta name="description" content="Capstone GRC Audit Readiness Dashboard aggregating all 12 security projects">
+</head>
+<body>
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <h1>Audit Readiness<br>Dashboard</h1>
+        <small>GRC Portfolio v1.0</small>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="#projects" class="active">Projects</a>
+        <a href="#coverage">Control Matrix</a>
+        <a href="#deadlines">Deadlines</a>
+        <a href="#summary">Summary</a>
+    </nav>
+    <div class="sidebar-footer">
+        Generated {{ data.generated_at[:19] if data.generated_at else 'N/A' }}
+    </div>
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="main">
+
+    <!-- Top Bar -->
+    <div class="topbar">
+        <h2>Portfolio Dashboard</h2>
+        <div class="rag-badge {{ data.overall_rag.value|lower }}">
+            <span class="rag-dot {{ data.overall_rag.value|lower }}"></span>
+            Overall: {{ data.overall_rag.value }}
+        </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-value">{{ data.summary.total_projects }}</div>
+            <div class="stat-label">Total Projects</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ data.summary.total_tests }}</div>
+            <div class="stat-label">Total Tests</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ data.summary.controls_covered }} / {{ data.summary.controls_total }}</div>
+            <div class="stat-label">Controls Covered</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{{ data.summary.upcoming_deadlines }}</div>
+            <div class="stat-label">Upcoming Deadlines</div>
+        </div>
+    </div>
+
+    <!-- ===== PROJECTS SECTION ===== -->
+    <section class="section" id="projects">
+        <div class="section-header">
+            <h3>Project Status</h3>
+            <span class="section-count">{{ data.projects|length }} projects</span>
+        </div>
+        <div class="project-grid">
+            {% for p in data.projects %}
+            <div class="project-card rag-{{ p.rag.value|lower }}">
+                <div class="card-header">
+                    <h4>{{ p.name }}</h4>
+                    <span class="card-id">{{ p.project_id }}</span>
+                </div>
+                <div class="card-meta">
+                    <span class="type-badge {{ p.type.value|lower }}">{{ p.type.value }}</span>
+                    <span class="status-badge {{ p.status.value|lower|replace('_', '-') }}">{{ p.status.value|replace('_', ' ') }}</span>
+                </div>
+                <div class="card-description">{{ p.description }}</div>
+                <div class="card-stats">
+                    <span><span class="stat-num">{{ p.test_count }}</span> tests</span>
+                    {% if p.port %}
+                    <span>Port <span class="stat-num">{{ p.port }}</span></span>
+                    {% endif %}
+                    <span>
+                        Evidence:
+                        {% if p.evidence_freshness_days <= 7 %}
+                        <span class="staleness fresh">{{ p.evidence_freshness_days }}d</span>
+                        {% elif p.evidence_freshness_days <= 30 %}
+                        <span class="staleness stale">{{ p.evidence_freshness_days }}d</span>
+                        {% else %}
+                        <span class="staleness expired">{{ p.evidence_freshness_days }}d</span>
+                        {% endif %}
+                    </span>
+                    <span class="rag-dot {{ p.rag.value|lower }}" title="{{ p.rag.value }}"></span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ===== CONTROL COVERAGE MATRIX ===== -->
+    <section class="section" id="coverage">
+        <div class="section-header">
+            <h3>Control Coverage Matrix</h3>
+            <span class="section-count">{{ data.controls|length }} controls</span>
+        </div>
+
+        <!-- Category Filter Chips -->
+        {% set categories = data.controls|map(attribute='category')|unique|list %}
+        <div class="filter-row">
+            <span class="filter-chip active" data-filter="all">All</span>
+            {% for cat in categories %}
+            <span class="filter-chip" data-filter="{{ cat }}">{{ cat }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Matrix Table -->
+        <div class="matrix-container">
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>Control</th>
+                        {% for p in data.projects %}
+                        <th>{{ p.project_id }}</th>
+                        {% endfor %}
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in data.controls %}
+                    <tr data-category="{{ c.category }}">
+                        <td>
+                            <span class="control-name">{{ c.control_name }}</span>
+                            <span class="control-category">{{ c.category }}</span>
+                        </td>
+                        {% for p in data.projects %}
+                        <td>
+                            {% if p.project_id in c.covered_by %}
+                                {% if c.status.value == 'COVERED' %}
+                                <span class="cell-covered" title="Covered">&check;</span>
+                                {% elif c.status.value == 'PARTIAL' %}
+                                <span class="cell-partial" title="Partial">~</span>
+                                {% else %}
+                                <span class="cell-gap" title="Gap">&times;</span>
+                                {% endif %}
+                            {% else %}
+                            <span class="cell-none">&middot;</span>
+                            {% endif %}
+                        </td>
+                        {% endfor %}
+                        <td>
+                            <span class="coverage-status {{ c.status.value|lower }}">{{ c.status.value }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== UPCOMING DEADLINES ===== -->
+    <section class="section" id="deadlines">
+        <div class="section-header">
+            <h3>Upcoming Audit Deadlines</h3>
+            <span class="section-count">{{ data.deadlines|length }} upcoming</span>
+        </div>
+        <div class="deadline-list">
+            {% for d in data.deadlines %}
+            <div class="deadline-item priority-{{ d.priority|lower }}">
+                <div class="deadline-date">
+                    <div class="days">{{ d.days_remaining }}</div>
+                    <div class="label">DAYS</div>
+                </div>
+                <div class="deadline-info">
+                    <div class="desc">{{ d.description }}</div>
+                    <div class="meta">Due {{ d.date }} &middot; Control {{ d.related_control }}</div>
+                </div>
+                <span class="deadline-priority {{ d.priority|lower }}">{{ d.priority }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ===== SUMMARY SECTION ===== -->
+    <section class="section" id="summary">
+        <div class="section-header">
+            <h3>Audit Posture Assessment</h3>
+        </div>
+        <div class="summary-section">
+            <div>
+                <h3>Portfolio Health</h3>
+                <p>
+                    {{ data.summary.total_projects }} projects across {{ data.controls|length }} Vodafone security controls.
+                    <strong>{{ data.summary.controls_covered }}</strong> fully covered,
+                    <strong>{{ data.summary.controls_partial }}</strong> partially covered,
+                    <strong>{{ data.summary.controls_gap }}</strong> gaps.
+                    {{ data.summary.upcoming_deadlines }} audit deadlines upcoming.
+                    {% if data.overall_rag.value == 'GREEN' %}
+                    All projects and evidence are within acceptable thresholds.
+                    {% elif data.overall_rag.value == 'AMBER' %}
+                    Some projects require attention — evidence freshness or partial control coverage needs remediation before the next audit cycle.
+                    {% else %}
+                    Critical gaps exist. Immediate remediation is required on stale evidence and uncovered controls.
+                    {% endif %}
+                </p>
+                <div class="summary-metadata">
+                    Dashboard generated {{ data.generated_at[:19] if data.generated_at else 'N/A' }}
+                </div>
+            </div>
+            <div class="summary-mini-grid">
+                <div>
+                    <div class="mini-val green">{{ data.summary.projects_green }}</div>
+                    <div class="mini-label">GREEN Projects</div>
+                </div>
+                <div>
+                    <div class="mini-val amber">{{ data.summary.projects_amber }}</div>
+                    <div class="mini-label">AMBER Projects</div>
+                </div>
+                <div>
+                    <div class="mini-val red">{{ data.summary.projects_red }}</div>
+                    <div class="mini-label">RED Projects</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="dashboard-footer">
+        GRC Audit Readiness Dashboard &middot; Portfolio Project 13 &middot; Capstone
+    </footer>
+
+</main>
+
+<!-- ===== FILTER JS ===== -->
+<script>
+(function() {
+    // Category filter for control matrix
+    const chips = document.querySelectorAll('.filter-chip');
+    const rows = document.querySelectorAll('.matrix-table tbody tr');
+    chips.forEach(function(chip) {
+        chip.addEventListener('click', function() {
+            chips.forEach(function(c) { c.classList.remove('active'); });
+            chip.classList.add('active');
+            var filter = chip.getAttribute('data-filter');
+            rows.forEach(function(row) {
+                if (filter === 'all' || row.getAttribute('data-category') === filter) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Smooth scroll for sidebar nav
+    document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // Highlight active nav item on scroll
+    var sections = document.querySelectorAll('.section');
+    var navLinks = document.querySelectorAll('.sidebar-nav a');
+    window.addEventListener('scroll', function() {
+        var current = '';
+        sections.forEach(function(section) {
+            var top = section.getBoundingClientRect().top;
+            if (top < 150) {
+                current = section.getAttribute('id');
+            }
+        });
+        navLinks.forEach(function(link) {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+})();
+</script>
+
+</body>
+</html>
