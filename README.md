@@ -3,9 +3,9 @@
 ![Python](https://img.shields.io/badge/Python-3.12+-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
-![Tests](https://img.shields.io/badge/tests-616%2B%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-738%2B%20passing-brightgreen)
 ![Projects](https://img.shields.io/badge/projects-13-blue)
-![Status](https://img.shields.io/badge/status-11%20complete%20%7C%203%20in%20progress-orange)
+![Status](https://img.shields.io/badge/status-12%20complete%20%7C%201%20in%20progress-orange)
 
 **AI-powered GRC engineering portfolio** — 13 security automation tools spanning IT general controls, identity governance, vulnerability management, DevSecOps assurance, cloud security posture, policy-as-code, security metrics, data classification, control mapping, risk management, vendor assessment, incident response, and audit readiness.
 
@@ -28,13 +28,13 @@
 | 9 | [IAM Access Lifecycle Simulator](projects/02-access-lifecycle-simulator/) | AD/HR/ITSM data ingestion. Leaver detection, orphaned accounts, MFA gaps, self-approval violations → access certification pack | 46 |
 | 10 | [Security Control Coverage Mapper](projects/09-control-coverage-mapper/) | Parse policy docs (ISO 27001, NIST CSF, CIS v8, Vodafone). Fuzzy matching, coverage heatmaps, gap analysis | 59 |
 | 11 | [Vendor Security Questionnaire Scorer](projects/11-vendor-security-questionnaire-scorer/) | Ingest vendor questionnaires (CSV/Excel). Weighted scoring across 7 categories. Risk rating + remediation checklist | 31 |
+| 12 | [Risk Register + Scoring Engine](projects/10-risk-register-scoring-engine/) | Full CRUD risk register. CVSS v3.1 + SSVC v2 scoring. 5x5 risk matrix, acceptance workflows, JSON/CSV export | 63 |
+| 13 | [Incident Response Runbook Generator](projects/12-incident-response-runbook-generator/) | 6 runbook templates (230+ actions). AI customization engine, markdown/JSON export | 59 |
 
 ### In Progress
 
 | # | Project | Description | Est. Tests |
 |---|---------|-------------|------------|
-| 12 | Risk Register + Scoring Engine | Full CRUD risk register. CVSS v3.1 + SSVC scoring. Risk acceptance workflows. PDF/CSV risk matrix export | 50+ |
-| 13 | Incident Response Runbook Generator | 6 runbook templates (malware, ransomware, data breach, DDoS, insider threat, credential theft). Claude API customization. PDF output | 35+ |
 | 14 | Audit Readiness Dashboard | Web dashboard aggregating control status, evidence freshness, and audit deadlines across all projects. Next.js + FastAPI | 30+ |
 
 ---
