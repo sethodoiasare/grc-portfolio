@@ -3,9 +3,9 @@
 ![Python](https://img.shields.io/badge/Python-3.12+-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black)
-![Tests](https://img.shields.io/badge/tests-480%2B%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-616%2B%20passing-brightgreen)
 ![Projects](https://img.shields.io/badge/projects-13-blue)
-![Status](https://img.shields.io/badge/status-8%20complete%20%7C%206%20in%20progress-orange)
+![Status](https://img.shields.io/badge/status-11%20complete%20%7C%203%20in%20progress-orange)
 
 **AI-powered GRC engineering portfolio** — 13 security automation tools spanning IT general controls, identity governance, vulnerability management, DevSecOps assurance, cloud security posture, policy-as-code, security metrics, data classification, control mapping, risk management, vendor assessment, incident response, and audit readiness.
 
@@ -25,15 +25,15 @@
 | 6 | [Policy-as-Code Starter Kit](projects/06-policy-as-code/) | 12 Rego policies (IAM, encryption, logging, networking) + Python evaluator | 55 |
 | 7 | [Security Metrics Pack](projects/07-security-metrics-pack/) | MTTD/MTTR, alert quality, vuln SLA computation with matplotlib PNG charts | 28 |
 | 8 | [Data Classification Scanner](projects/08-data-classification-scanner/) | Regex-based PII/PCI/PHI/secrets detection across 14 patterns with false-positive filtering | 36 |
+| 9 | [IAM Access Lifecycle Simulator](projects/02-access-lifecycle-simulator/) | AD/HR/ITSM data ingestion. Leaver detection, orphaned accounts, MFA gaps, self-approval violations → access certification pack | 46 |
+| 10 | [Security Control Coverage Mapper](projects/09-control-coverage-mapper/) | Parse policy docs (ISO 27001, NIST CSF, CIS v8, Vodafone). Fuzzy matching, coverage heatmaps, gap analysis | 59 |
+| 11 | [Vendor Security Questionnaire Scorer](projects/11-vendor-security-questionnaire-scorer/) | Ingest vendor questionnaires (CSV/Excel). Weighted scoring across 7 categories. Risk rating + remediation checklist | 31 |
 
 ### In Progress
 
 | # | Project | Description | Est. Tests |
 |---|---------|-------------|------------|
-| 9 | IAM Access Lifecycle Simulator | AD/HR/ITSM data ingestion. Leaver detection, orphaned accounts, MFA gaps, self-approval violations → access certification pack | 40+ |
-| 10 | Security Control Coverage Mapper | Parse policy documents (ISO 27001, NIST CSF). Extract controls, map to implemented controls, generate coverage heatmap + gap analysis | 40+ |
-| 11 | Risk Register + Scoring Engine | Full CRUD risk register. CVSS v3.1 + SSVC scoring. Risk acceptance workflows. PDF/CSV risk matrix export | 50+ |
-| 12 | Vendor Security Questionnaire Scorer | Ingest vendor questionnaires (Excel/CSV/JSON). Auto-score responses. Risk rating with rationale + remediation checklist | 40+ |
+| 12 | Risk Register + Scoring Engine | Full CRUD risk register. CVSS v3.1 + SSVC scoring. Risk acceptance workflows. PDF/CSV risk matrix export | 50+ |
 | 13 | Incident Response Runbook Generator | 6 runbook templates (malware, ransomware, data breach, DDoS, insider threat, credential theft). Claude API customization. PDF output | 35+ |
 | 14 | Audit Readiness Dashboard | Web dashboard aggregating control status, evidence freshness, and audit deadlines across all projects. Next.js + FastAPI | 30+ |
 
@@ -96,7 +96,7 @@ Every project maps findings to the Vodafone Tier 2/3 control framework:
 | CYBER_038 — Secure System Management | IAM, encryption, logging, networking hardening | P1, P5, P6, P9 |
 | CYBER/STD/014 — Secure Agile Development | SAST, SCA, secrets, DAST, review gates | P4 |
 | CYBER_062 — Secure SDLC | Pipeline security, code review, dependency mgmt | P4 |
-| IAM Lifecycle | Joiner/mover/leaver, access certification | P2, P9 |
+| IAM Lifecycle | Joiner/mover/leaver, access certification | P2b, P9 |
 | Vulnerability Management | SLA breach tracking, KPI dashboards | P3, P10 |
 | Risk Management | Risk register, scoring, acceptance | P10 |
 | Supplier Security | Vendor assessments, questionnaire scoring | P11 |
